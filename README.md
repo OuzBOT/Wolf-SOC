@@ -60,3 +60,15 @@ wolf-soc/
 ```
 
 *All scenarios and indicators are 100% synthetic (RFC 5737 test IP ranges `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` and RFC 2606 `.example` domains). Educational study content is independent and not affiliated with any certification body.*
+
+## Development & Acknowledgments
+
+Wolf-SOC is an independent educational project created
+and maintained by Uziel Garcia (OuzBOT).
+
+Development was assisted by OpenAI ChatGPT and Google
+Gemini for code generation, debugging, documentation,
+and technical guidance.
+
+The project was directed, tested, and reviewed by its
+maintainer.
