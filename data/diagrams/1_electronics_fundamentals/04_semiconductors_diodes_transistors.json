@@ -1,0 +1,43 @@
+{
+  "title": "Electronics Fundamentals Module 4: Diodes, LEDs, Zeners & Transistors (BJT/MOSFET)",
+  "overview": "Covers PN junctions, forward voltage drops, bridge rectifiers, Zener regulation, and using transistors as switches/amplifiers.",
+  "art": [
+    "  DIODE & LED (?1)                            ZENER DIODE REGULATOR (?2)",
+    "   Anode (+) ──►|── Cathode (-)                Vin (12V) ──[ R ]──┬──► Vout (5.1V)",
+    "   (Silicon drops ~0.7V Forward)                                  ▲ (Reverse Biased)",
+    "   (LED drops ~1.8V–3.3V + Resistor!)                             ┴  5.1V Zener",
+    "                                                                 ═╧═ GND",
+    "  NPN BJT TRANSISTOR (?3)                     N-CHANNEL MOSFET (?4)",
+    "          Collector (Load +)                           Drain (Load +)",
+    "              │                                            │",
+    "   Base ──►│/ (Current Controlled)              Gate ──►││ (Voltage Controlled!)",
+    "              ▼                                            │",
+    "          Emitter (GND)                                Source (GND)"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Standard Diodes, Rectifiers & LEDs",
+      "what": "A PN-junction one-way valve for electricity. Conducts easily when forward-biased (+ on Anode, - on Cathode/stripe) and blocks current when reverse-biased.",
+      "exam_facts": "Silicon diode forward voltage drop (Vf) ≈ 0.7V (Germanium ≈ 0.3V). Full-Wave Bridge Rectifier uses 4 diodes to convert AC into pulsing DC. LEDs require a series current-limiting resistor: R = (Vs - Vf) / I.",
+      "troubleshoot": "Use your DMM's Diode Test mode: Good silicon diode reads ~0.5V–0.7V one way and 'OL' (open) when you flip the leads. Reading 0.00V both ways = shorted diode!"
+    },
+    "2": {
+      "label": "Zener Diode (Voltage Regulation)",
+      "what": "A special diode engineered to safely conduct backward (reverse breakdown) at a precise voltage, clamping output voltage steady.",
+      "exam_facts": "Always installed in REVERSE bias (stripe/cathode toward positive) with a series resistor to absorb excess voltage. Used as a cheap voltage reference or over-voltage clamp.",
+      "troubleshoot": "If Vout equals Vin instead of the Zener's rated voltage, either the Zener failed OPEN or it was accidentally installed backwards (acting like a 0.7V standard diode)."
+    },
+    "3": {
+      "label": "BJT Transistor (NPN / PNP - Current Controlled)",
+      "what": "A 3-pin semiconductor (Base, Collector, Emitter) where a tiny current into the Base controls a much larger current flowing from Collector to Emitter.",
+      "exam_facts": "Current Gain = Beta (β or hFE) = Ic / Ib. In NPN, 'Not Pointing iN' (arrow points out on Emitter); Base must be ~0.7V higher than Emitter to turn ON (Saturation).",
+      "troubleshoot": "Always put a resistor (e.g., 1kΩ) in series with the Base pin—connecting a microcontroller pin straight to a BJT Base without a resistor acts like a dead short through the 0.7V junction!"
+    },
+    "4": {
+      "label": "MOSFET (Voltage Controlled Power Switch)",
+      "what": "Metal-Oxide-Semiconductor Field-Effect Transistor (Gate, Drain, Source). Uses an electric field (voltage on Gate) instead of continuous current to switch heavy loads.",
+      "exam_facts": "Extremely high input impedance on the Gate (draws almost zero steady current). Very low on-resistance (Rds(on)), so MOSFETs run much cooler than BJTs when switching motors or high-current LEDs.",
+      "troubleshoot": "MOSFET gates are super sensitive to static (ESD) and shouldn't be left 'floating'—always add a 10kΩ pull-down resistor from Gate to Source so noise doesn't randomly turn your load on."
+    }
+  }
+}

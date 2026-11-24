@@ -1,0 +1,43 @@
+{
+  "title": "Electronics Fundamentals Module 3: AC Waveforms, Capacitors, Inductors & Transformers",
+  "overview": "Covers AC sine wave measurements (Vpp vs Vrms), capacitive/inductive reactance, and transformer step-up/step-down ratios.",
+  "art": [
+    "  AC SINE WAVE (OSCILLOSCOPE) (?1)             CAPACITOR (C) vs INDUCTOR (L) (?2)(?3)",
+    "       +Vp ──  ╭───╮                          Capacitor:  ──┤ ├──  (Blocks DC, Passes AC)",
+    "   0V ────────╯─────╰─────╭───                Inductor :  ──⌇⌇⌇──  (Passes DC, Blocks AC)",
+    "       -Vp ──────────╰───╯",
+    "       │◄─── Period (T) ───►│                 Memory Trick: ELI the ICE man",
+    "",
+    "  STEP-DOWN TRANSFORMER (AC ONLY) (?4)",
+    "   120V AC  ────┐       ┌────  12V AC",
+    "   Primary    3 ||     || 3   Secondary",
+    "   (1000 Turns) 3 || Core|| 3   (100 Turns)   Turns Ratio = 10:1 (Step-Down)",
+    "            ────┘       └────"
+  ],
+  "nodes": {
+    "1": {
+      "label": "AC Sine Wave: Peak-to-Peak (Vpp), RMS & Frequency",
+      "what": "Alternating Current reverses direction periodically. Oscilloscopes show Peak-to-Peak (Vpp), while multimeters display RMS (effective DC-equivalent voltage).",
+      "exam_facts": "Vrms = Vpeak × 0.707 | Vpeak = Vpp / 2 | Frequency (f) = 1 / Period (T) in Hertz (Hz). US wall power is 120V RMS (~170V Peak / 340V Vpp) at 60Hz.",
+      "troubleshoot": "If your DMM reads ~85V on a 120V AC line, make sure it's set to AC (~) and check if you're measuring a non-sine wave without a True-RMS meter."
+    },
+    "2": {
+      "label": "Capacitors & Capacitive Reactance (Xc)",
+      "what": "Stores energy in an electric field between two conductive plates separated by an insulator (dielectric). Opposes changes in VOLTAGE.",
+      "exam_facts": "Measured in Farads (uF, nF, pF). Xc = 1 / (2πfC). As frequency goes UP, capacitive reactance (Xc) goes DOWN (acts like a short to high-frequency AC). ICE: Current (I) leads Voltage (E).",
+      "troubleshoot": "Electrolytic capacitors are polarized (+ and -)—putting them in backwards makes them pop/vent! Always discharge big power-supply caps before touching."
+    },
+    "3": {
+      "label": "Inductors & Inductive Reactance (XL)",
+      "what": "A coil of wire that stores energy in a magnetic field when current flows through it. Opposes sudden changes in CURRENT.",
+      "exam_facts": "Measured in Henries (mH, uH). XL = 2πfL. As frequency goes UP, inductive reactance (XL) goes UP (blocks high frequencies, passes DC easily). ELI: Voltage (E) leads Current (I).",
+      "troubleshoot": "Inductors rarely fail shorted; they usually fail OPEN (broken internal wire) or overheated with melted enamel insulation."
+    },
+    "4": {
+      "label": "Transformers & Mutual Inductance",
+      "what": "Uses two coils wrapped around an iron/ferrite core to step AC voltage up or down via magnetic induction—with zero direct electrical connection (isolation).",
+      "exam_facts": "Vp / Vs = Np / Ns (Voltage ratio equals Turns ratio). Power stays constant (Pin ≈ Pout), so stepping voltage DOWN steps available current UP! Does NOT work on steady DC.",
+      "troubleshoot": "Check transformer windings with an ohmmeter (power OFF!): Primary usually has higher resistance than a step-down secondary. 'OL' (infinite ohms) means a blown thermal fuse or open winding."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "TCP 3-Way Handshake & Connection Setup",
+  "art": [
+    "  ┌──────────────┐                             ┌──────────────┐",
+    "  │    CLIENT    │                             │    SERVER    │",
+    "  │ (Your Script)│                             │  (Port 443)  │",
+    "  └──────┬───────┘                             └──────┬───────┘",
+    "         │                                            │",
+    "         │ ─── 1. SYN (Seq=100) (?1) ────────────────►│",
+    "         │                                            │",
+    "         │◄─── 2. SYN-ACK (Seq=300, Ack=101) (?2) ────│",
+    "         │                                            │",
+    "         │ ─── 3. ACK (Seq=101, Ack=301) (?3) ───────►│",
+    "         │                                            │",
+    "  ═══════╪════════════════════════════════════════════╪════════",
+    "         │        [ ESTABLISHED CONNECTION ]          │",
+    "         │◄══════════ Encrypted Data Flow ═══════════►│"
+  ],
+  "nodes": {
+    "1": {
+      "label": "SYN (Synchronize)",
+      "what": "The client sends a packet with the SYN flag set and a random starting sequence number (Seq=100) to ask if the server is open.",
+      "mastery": "Security+ Tip: Attackers abuse this step in a 'SYN Flood' DoS attack by sending thousands of SYNs and never finishing step 3, leaving server memory hanging."
+    },
+    "2": {
+      "label": "SYN-ACK (Synchronize-Acknowledge)",
+      "what": "The server agrees to connect, sends its own sequence number (Seq=300), and adds 1 to the client's number (Ack=101) to prove it received step 1.",
+      "mastery": "Network+ Tip: If a port is closed or blocked by a firewall, you won't get a SYN-ACK—you'll either get an RST (Reset) packet or total silence (dropped)."
+    },
+    "3": {
+      "label": "ACK (Acknowledge)",
+      "what": "The client adds 1 to the server's sequence number (Ack=301) and sends it back. The reliable TCP tunnel is now officially open.",
+      "mastery": "Python Connection: When you run `socket.connect()` in Python, the OS handles this entire 3-step dance behind the scenes before your code sends a single byte."
+    }
+  }
+}

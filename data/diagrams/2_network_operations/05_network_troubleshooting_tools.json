@@ -1,0 +1,40 @@
+{
+  "title": "Networking Domain 5: Troubleshooting Methodology, Tools & CLI (24%)",
+  "overview": "Covers the standard 7-step troubleshooting process, physical cable/RF testers, CLI diagnostics, and switch/router show commands.",
+  "art": [
+    "  STANDARD 7-STEP TROUBLESHOOTING FLOW (?1)     HARDWARE & CLI TOOLKIT (?2)(?3)(?4)",
+    "   1. Identify the Problem (Gather info)        • Cable Tester / TDR / OTDR (Layer 1)",
+    "   2. Establish a Theory (Question obvious)     • Tone Generator & Probe (Find wire)",
+    "   3. Test the Theory to Determine Cause        • Wi-Fi Analyzer (RSSI / SNR / Channels)",
+    "   4. Establish Plan of Action & Effects        • ping / tracert / nslookup / dig",
+    "   5. Implement the Solution or Escalate        • ipconfig / ip addr / arp / netstat",
+    "   6. Verify Functionality & Preventive Measures• show interface / show mac address-table",
+    "   7. Document Findings, Actions & Outcomes"
+  ],
+  "nodes": {
+    "1": {
+      "label": "7-Step Network Troubleshooting Methodology",
+      "what": "A structured, repeatable process to isolate network faults without guessing randomly or breaking working systems.",
+      "exam_facts": "Memorize the EXACT order: (1) Identify the problem (gather info, identify symptoms, question users, determine if anything changed), (2) Establish a theory of probable cause (question the obvious!), (3) Test the theory to determine cause (if not confirmed, re-establish a new theory or escalate), (4) Establish a plan of action and identify potential effects, (5) Implement the solution or escalate as necessary, (6) Verify full system functionality and implement preventive measures if applicable, (7) Document findings, actions, outcomes, and lessons learned throughout the process.",
+      "troubleshoot": "Exam Trap: after fixing the issue, verify full system functionality and implement preventive measures before documenting the findings, actions, outcomes, and lessons learned."
+    },
+    "2": {
+      "label": "Physical Layer Hardware Tools (Copper, Fiber & Wi-Fi)",
+      "what": "Handheld diagnostic hardware used when Layer 1 links fail, drop packets, or suffer interference.",
+      "exam_facts": "Cable Certifier (tests bandwidth/crosstalk/attenuation to TIA/EIA Cat6 specs) vs Basic Cable Tester (checks wiremap/continuity/opens/shorts). TDR (Time-Domain Reflectometer - finds exact distance to a break in COPPER) vs OTDR (Optical TDR - finds breaks/splices in FIBER). Tone Generator & Probe ('Fox and Hound' - traces unlabeled cables in a wiring closet). Loopback Plug (tests a NIC or switch port's Tx/Rx hardware). Optical Power Meter / Light Meter (measures fiber signal loss in dBm). Wi-Fi Analyzer (checks RSSI signal strength, Signal-to-Noise Ratio/SNR, and channel overlap).",
+      "troubleshoot": "High CRC/FCS errors + Runts/Giants on a switch port usually indicate a bad cable, EMI interference, or a Duplex Mismatch (one side forced to Full-Duplex while the other is Half-Duplex)."
+    },
+    "3": {
+      "label": "Essential Host CLI Commands (Windows & Linux)",
+      "what": "Built-in terminal utilities for checking IP configuration, name resolution, routing tables, and active socket connections.",
+      "exam_facts": "Connectivity & Path: `ping` (ICMP echo test), `tracert` (Windows) / `traceroute` (Linux - uses TTL expiration to show every router hop), `pathping` / `mtr` (combines ping + traceroute to pinpoint exact hop packet loss). DNS: `nslookup` and `dig` (queries A, AAAA, MX, PTR, TXT records). Local Config & Sockets: `ipconfig /all` (Windows) vs `ip addr` / `ip route` (Linux), `arp -a` (views IP-to-MAC cache), `netstat -ano` or `ss -tulnp` (shows active connections, listening ports, and owning Process IDs). Packet Capture: `tcpdump` (CLI packet sniffer) and Wireshark.",
+      "troubleshoot": "Ping ladder: (1) `ping 127.0.0.1` (tests local TCP/IP stack), (2) `ping <own IP>` (tests NIC), (3) `ping <Default Gateway>` (tests local LAN/switch), (4) `ping 8.8.8.8` (tests ISP/routing), (5) `ping google.com` (tests DNS)."
+    },
+    "4": {
+      "label": "Switch & Router CLI Diagnostics (`show` Commands)",
+      "what": "Read-only diagnostic commands run on managed switches and routers to inspect port status, MAC tables, VLANs, and routing.",
+      "exam_facts": "`show interface` / `show ip interface brief` (checks Up/Up vs Administratively Down, speed/duplex, input/CRC errors), `show mac address-table` (sees which MAC lives on which switch port), `show vlan` (verifies port VLAN assignments), `show spanning-tree` (checks Root Bridge & blocking ports), `show ip route` (verifies routing table & gateway of last resort), `show cdp neighbors` / `show lldp neighbors` (discovers directly connected switches/APs/phones).",
+      "troubleshoot": "If a switch port status shows `up / down` (Line is up, Protocol is down), suspect a Layer 2 mismatch—such as wrong encapsulation, bad trunking config, or mismatched speed/duplex."
+    }
+  }
+}

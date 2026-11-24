@@ -1,0 +1,42 @@
+{
+  "title": "Core Security Domain 1: General Security Concepts, Zero Trust & PKI (12%)",
+  "overview": "Covers Security Controls, CIA Triad, Zero Trust planes, Deception tech, and Cryptography/PKI fundamentals.",
+  "art": [
+    "  CIA TRIAD + AAA + NON-REPUDIATION (?1)        ZERO TRUST ARCHITECTURE (?2)",
+    "        [ Confidentiality ]                     ┌─────────────────────────────┐",
+    "          /             \\                       │ POLICY ENGINE / ADMIN (PE/PA)│ (Control Plane)",
+    "         /  (Security)   \\                      └──────────────┬──────────────┘",
+    "   [ Integrity ] ─── [ Availability ]                          ▼ (Policy Enforcement)",
+    "   + Non-Repudiation (Digital Signatures)       [ Subject ] ─►[ PEP ] ─► [ Enterprise Resource ]",
+    "",
+    "  CRYPTOGRAPHY & PKI TRUST CHAIN (?3)(?4)",
+    "   Symmetric (AES-256: Fast, Same Key) vs Asymmetric (RSA/ECC: Public + Private Keys)",
+    "   [ Root CA ] ──signs──► [ Intermediate CA ] ──signs──► [ Server Cert (X.509 / TLS) ]"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Security Controls, CIA Triad & Non-Repudiation",
+      "what": "Core principles of protecting information and classifying safeguards by how they are implemented and what function they serve.",
+      "exam_facts": "CIA Triad: Confidentiality (Encryption, ACLs), Integrity (SHA-256 Hashing, HMAC), Availability (RAID, Redundancy, Backups). Non-Repudiation: Proves a sender cannot deny sending a message (achieved via Digital Signatures = Hash encrypted with Sender's Private Key). Control Categories: Technical (firewalls, MFA), Managerial (policies, risk assessments), Operational (security guards, awareness training), Physical (bollards, mantraps/access control vestibules). Control Types: Preventive (stops attack), Detective (alerts/logs), Corrective (restores system), Deterrent (warning signs), Compensating (alternative control), Directive (policies/SOPs).",
+      "troubleshoot": "Exam Trap: Security exams frequently ask you to classify a control by BOTH category and type—for example, a firewall rule is Technical/Preventive, while a CCTV camera is Physical/Detective (and Deterrent)."
+    },
+    "2": {
+      "label": "Zero Trust Architecture & Deception Technologies",
+      "what": "Replaces implicit trust based on physical/network location ('inside the LAN = safe') with continuous verification of identity, device posture, and least privilege.",
+      "exam_facts": "Control Plane: Policy Engine (PE - makes grant/deny decision using threat intel & context) + Policy Administrator (PA - generates session token/credentials). Data Plane: Policy Enforcement Point (PEP - gateway/proxy that actually connects/blocks the user to the resource). Deception Tech: Honeypot (single decoy system), Honeynet (network of decoys), Honeyfile (fake sensitive file with tracking alert), Honeytoken (fake API key/credential planted to catch intruders early).",
+      "troubleshoot": "Adaptive Identity dynamically adjusts access requirements—for example, prompting for MFA if a user logs in from an unrecognized IP or unmanaged device."
+    },
+    "3": {
+      "label": "Symmetric vs. Asymmetric Encryption & Hashing",
+      "what": "Cryptographic methods for protecting data at rest and in transit, verifying file integrity, and exchanging keys securely.",
+      "exam_facts": "Symmetric (Same key encrypts & decrypts—fast for bulk data, hard to share keys safely): AES-128/256, ChaCha20 (Deprecated/weak: DES, 3DES, RC4). Asymmetric (Public key encrypts, Private key decrypts—slow, solves key exchange): RSA, ECC (Elliptic Curve—stronger with smaller keys, great for mobile/IoT), Diffie-Hellman / ECDHE (key exchange with Perfect Forward Secrecy). Hashing (One-way fixed-length digest, NO decryption): SHA-256, SHA-3 (Deprecated/broken: MD5, SHA-1). Salting adds random data before hashing passwords to defeat Rainbow Tables; Key Stretching (bcrypt, Argon2, PBKDF2) slows down brute-force attacks.",
+      "troubleshoot": "In TLS/HTTPS, Asymmetric crypto (ECDHE/RSA) is ONLY used during the initial handshake to safely agree on a shared Symmetric session key (AES), which then encrypts the actual data stream at high speed!"
+    },
+    "4": {
+      "label": "Public Key Infrastructure (PKI), Certificates & TPM/HSM",
+      "what": "The hardware, software, policies, and Certificate Authorities (CAs) that issue, validate, and revoke digital certificates binding public keys to identities.",
+      "exam_facts": "X.509 Certificate fields: Subject, Issuer, Public Key, Validity Period, Serial Number, Signature. Wildcard Cert (*.domain.com) secures all first-level subdomains. CSR (Certificate Signing Request) is generated with your public key and sent to the CA. Revocation: CRL (Certificate Revocation List - downloaded list, slower) vs OCSP (Online Certificate Status Protocol - real-time query) & OCSP Stapling (web server attaches timestamped OCSP response to speed up TLS). Hardware Crypto: TPM (Trusted Platform Module - motherboard chip storing BitLocker/boot keys) vs HSM (Hardware Security Module - dedicated enterprise appliance/card for high-speed CA/key management).",
+      "troubleshoot": "If a browser throws `ERR_CERT_AUTHORITY_INVALID` on an internal web app, the client machine doesn't trust your internal Enterprise Root CA—deploy the Root CA cert via Group Policy (GPO) or MDM."
+    }
+  }
+}

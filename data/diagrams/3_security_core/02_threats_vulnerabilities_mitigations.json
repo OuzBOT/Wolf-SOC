@@ -1,0 +1,40 @@
+{
+  "title": "Core Security Domain 2: Threats, Vulnerabilities & Mitigations (22%)",
+  "overview": "Covers Threat Actors, Social Engineering, Malware indicators, Web/App vulnerabilities, and System Hardening.",
+  "art": [
+    "  THREAT ACTORS & SOCIAL ENGINEERING (?1)       APPLICATION & WEB ATTACKS (?3)",
+    "   • Nation-State (APT) | Hacktivist | Insider   • SQL Injection -> Parameterized Queries",
+    "   • Phishing / Spear / Whaling / Vishing/Smish  • XSS (Reflected/Stored) -> Input Encode",
+    "   • BEC (Business Email Compromise) / Typosquat • CSRF -> Anti-CSRF Tokens / SameSite",
+    "                                                 • Buffer Overflow -> ASLR / DEP / Bounds",
+    "  MALWARE & PERSISTENCE (?2)                    HARDENING & MITIGATIONS (?4)",
+    "   • Ransomware | Trojan | RAT | Rootkit | Worm  • Least Privilege | Patching | EDR",
+    "   • Fileless Malware (Living off the Land/RAM)  • Network Segmentation | WAF | MFA"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Threat Actors, Attack Surfaces & Social Engineering",
+      "what": "Categorizes who is attacking (resources, sophistication, motivation) and how they manipulate human psychology to bypass technical controls.",
+      "exam_facts": "Threat Actors: Nation-State (APT - Advanced Persistent Threat, stealthy, unlimited funding), Organized Crime (financial/ransomware), Hacktivist (political/ideological), Insider Threat (employees/contractors—hardest to detect because they already have valid credentials), Shadow IT (unsanctioned cloud apps/hardware deployed without IT approval). Social Engineering: Phishing (mass email), Spear Phishing (targeted), Whaling (C-level executives), Vishing (voice/phone), Smishing (SMS text), BEC (Business Email Compromise - spoofed/hijacked executive email requesting wire transfers), Watering Hole (compromising a website frequently visited by the target group), Typosquatting (registering lookalike domains like `g00gle.com`).",
+      "troubleshoot": "To fight BEC and email spoofing at the domain level, enforce SPF (lists authorized mail server IPs), DKIM (cryptographically signs outgoing emails), and DMARC (tells receiving servers to reject/quarantine emails that fail SPF/DKIM)."
+    },
+    "2": {
+      "label": "Malware Types & Indicators of Compromise (IoCs)",
+      "what": "Malicious software designed to steal data, encrypt systems, maintain hidden remote access, or spread across networks.",
+      "exam_facts": "Ransomware (encrypts files + threatens data leak/extortion), Trojan (disguised as legitimate software—often drops a RAT: Remote Access Trojan), Worm (self-replicates across networks with ZERO user interaction), Rootkit (hides at kernel/boot level to conceal malware from OS/AV), Keylogger / Spyware, Logic Bomb (triggers on a specific date or condition), Bloatware. Fileless Malware ('Living off the Land' / LotL): Runs purely in RAM using legitimate built-in tools like PowerShell, WMI, or certutil without writing an `.exe` to disk.",
+      "troubleshoot": "Traditional signature-based Antivirus misses Fileless Malware because no file touches the hard drive—use EDR (Endpoint Detection & Response) to monitor suspicious behavioral chains (like `winword.exe` spawning `powershell.exe -EncodedCommand`)."
+    },
+    "3": {
+      "label": "Application, Web & Hardware Vulnerabilities",
+      "what": "Coding flaws, race conditions, and supply-chain weaknesses exploited to run arbitrary code or steal database records.",
+      "exam_facts": "SQL Injection (SQLi - injecting SQL commands into input fields like `' OR 1=1--`) -> Fix: Parameterized Queries / Prepared Statements! Cross-Site Scripting (XSS - injecting malicious JavaScript into a site; Stored XSS hits all visitors, Reflected XSS comes via malicious link) -> Fix: Input validation & Context-aware Output Encoding + CSP. Cross-Site Request Forgery (CSRF/XSRF - tricks a logged-in user's browser into sending an unauthorized request) -> Fix: Anti-CSRF Tokens & SameSite cookies. Buffer Overflow (writing past allocated memory stack/heap to overwrite return pointers) -> Fix: Bounds checking, ASLR (Address Space Layout Randomization), and DEP/NX (Data Execution Prevention). Race Condition / TOCTOU (Time-of-Check to Time-of-Use). Directory Traversal (`../../etc/passwd`). Zero-Day (unknown flaw with no patch yet).",
+      "troubleshoot": "A WAF (Web Application Firewall) sits in front of web servers at Layer 7 to block SQLi, XSS, and OWASP Top 10 exploits while developers fix the underlying source code."
+    },
+    "4": {
+      "label": "Vulnerability Management & Hardening Techniques",
+      "what": "Proactive steps to shrink the attack surface across operating systems, applications, networks, and hardware.",
+      "exam_facts": "Hardening: Disable unused ports/services, change default passwords immediately, remove unnecessary software, enable Host-Based Firewall & Full Disk Encryption (BitLocker/FileVault), configure BIOS/UEFI passwords + Secure Boot (verifies cryptographic signatures of bootloaders to stop bootkits). Vulnerability Scanning: Credentialed (authenticated—logs in to see missing patches/registry flaws accurately) vs Non-Credentialed (external attacker view). CVSS (Common Vulnerability Scoring System 0.0–10.0) & CVE (Common Vulnerabilities and Exposures ID). Compensating Control: Used when a legacy system cannot be patched (e.g., isolating it on an air-gapped or strictly firewalled VLAN).",
+      "troubleshoot": "When writing Python automation scripts (`subprocess`, `eval`, SQL queries), NEVER pass unsanitized user input straight into `os.system()` or raw SQL string formatting—that's how Command Injection and SQLi happen!"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Python (COMP 667) Module 2: File I/O, JSON/CSV & Regex Log Parsing",
+  "overview": "Covers pathlib, context managers, JSON/CSV serialization, and Regular Expressions for parsing network/security logs.",
+  "art": [
+    "  SAFE FILE PIPELINE (`with` + `pathlib`) (?1)   SERIALIZATION (JSON / CSV) (?2)",
+    "   Path('logs/auth.log')                         Python Dict <── json.dumps() ──> JSON Text",
+    "         │                                       Python Dict <── json.load()  ──> .json File",
+    "         ▼                                       csv.DictReader() -> Maps headers to keys!",
+    "   with path.open('r', encoding='utf-8') as f:",
+    "       for line in f:  <── Streams line-by-line! REGEX LOG EXTRACTION (`re`) (?3)(?4)",
+    "   (Auto-closes file even if crash occurs!)      r'\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}' -> IPs"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Context Managers (`with`) & Cross-Platform `pathlib`",
+      "what": "Safely opens, reads, and writes files while automatically releasing OS file locks and avoiding Windows vs. Linux slash bugs.",
+      "exam_facts": "`with open(file, 'r', encoding='utf-8') as f:` guarantees `f.close()` runs automatically. Modes: `'r'` (read), `'w'` (write/overwrite), `'a'` (append logs), `'rb'/'wb'` (raw binary bytes—needed for firmware/images/packet captures). `pathlib.Path`: Use `/` operator (`Path('diagrams') / 'net.json'`), `.exists()`, `.glob('*.json')`, `.read_text()`, `.write_text()`.",
+      "troubleshoot": "On Windows, forgetting `encoding='utf-8'` causes `UnicodeDecodeError` when reading UTF-8 box-drawing characters or log files—always pass `encoding='utf-8'` explicitly!"
+    },
+    "2": {
+      "label": "JSON & CSV Data Serialization",
+      "what": "Converts Python dictionaries and lists into universal text formats used by REST APIs, config files, and spreadsheet exports.",
+      "exam_facts": "JSON (`import json`): `json.loads(str)` / `json.dumps(obj, indent=2)` work on Strings (`s` = string); `json.load(file)` / `json.dump(obj, file, indent=2)` work directly on File objects. CSV (`import csv`): Always open with `newline=''` on Windows; use `csv.DictReader` to access columns by header name instead of fragile index numbers.",
+      "troubleshoot": "JSON keys MUST use double quotes (`\"key\"`), not single quotes, and trailing commas after the last item in a JSON list/object will throw `json.decoder.JSONDecodeError`."
+    },
+    "3": {
+      "label": "Regular Expressions (`re`) Metacharacters & Groups",
+      "what": "Pattern-matching mini-language for extracting IP addresses, MACs, timestamps, and error codes from messy terminal output or syslog files.",
+      "exam_facts": "Always use raw strings `r'...'`! Tokens: `\\d` (digit 0-9), `\\w` (word char a-z/0-9/_), `\\s` (whitespace), `.` (any char except newline), `^` (start of line), `$` (end of line). Quantifiers: `*` (0 or more), `+` (1 or more), `?` (0 or 1), `{n,m}` (exact count). Parentheses `(...)` create capture groups (`match.group(1)`).",
+      "troubleshoot": "Use `re.findall(pattern, text)` to grab every matching IP or port in a log file as a Python list in one line of code."
+    },
+    "4": {
+      "label": "Practical SOC & Lab Log Parsing Workflow",
+      "what": "Combines `pathlib`, `re`, and `collections.Counter` to turn thousands of raw log lines into actionable alerts.",
+      "exam_facts": "`from collections import Counter`: Feeding a list of extracted failed-login IPs into `Counter(ips).most_common(5)` instantly reveals brute-force attackers. `re.compile(pattern)` pre-compiles a regex for faster performance inside large loops.",
+      "troubleshoot": "Greedy (`.*`) vs Non-Greedy (`.*?`): `.*` grabs everything up to the LAST matching character on a line; adding `?` (`.*?`) stops at the FIRST match."
+    }
+  }
+}

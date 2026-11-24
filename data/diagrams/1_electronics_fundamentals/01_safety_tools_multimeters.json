@@ -1,0 +1,47 @@
+{
+  "title": "Electronics Fundamentals Module 1: Lab Safety, ESD & Multimeter Setup",
+  "overview": "Covers electrical shock thresholds, Electrostatic Discharge (ESD) protection, and proper Digital Multimeter (DMM) lead placement.",
+  "art": [
+    "   ESD WORKSTATION (?1)                      DIGITAL MULTIMETER (DMM) (?2)",
+    "  ┌─────────────────────────┐               ┌─────────────────────────┐",
+    "  │   [ PCB / Component ]   │               │     [   12.04 V   ]     │",
+    "  │   ░░░░░░ ESD MAT ░░░░░░ │               │     ( V~  V-  Ω   )     │",
+    "  └──────┬───────────┬──────┘               │     ( mA  10A     )     │",
+    "         │           │                      └───┬────────┬────────┬───┘",
+    "     (Wrist)     [1MΩ Res]                    [10A]   [V/Ω/mA]  [COM]",
+    "     (Strap)         │                          │        │        │",
+    "         └─────► Earth Ground               (Series) (Parallel)(Black)",
+    "",
+    "  MEASURING VOLTAGE (Parallel) (?3)         MEASURING CURRENT (Series) (?4)",
+    "     ┌──────[ Load ]──────┐                    ┌───[A]───[ Load ]───┐",
+    "     │                    │                    │   (Break Circuit!)  │",
+    "    (+)                  (-)                  (+)                   (-)",
+    "     └──────[ V ]─────────┘                    └───────[ Power ]─────┘"
+  ],
+  "nodes": {
+    "1": {
+      "label": "ESD (Electrostatic Discharge) Protection",
+      "what": "Prevents invisible static electricity from your body (as low as 30V–100V) from frying sensitive CMOS/MOSFET chips.",
+      "exam_facts": "You can't feel static until ~3,000V, but microchips die at <100V. Wrist straps contain a built-in 1 Megaohm (1MΩ) safety resistor to limit current if you touch live power.",
+      "troubleshoot": "Always clip your wrist strap to the grounded ESD mat or bench ground *before* picking up an IC, RAM stick, or circuit board."
+    },
+    "2": {
+      "label": "DMM Jacks & Internal Fuses",
+      "what": "The three/four input ports on a multimeter: COM (Common/Black), V/Ω/mA (Red for voltage, resistance, small current), and 10A (Red for high current).",
+      "exam_facts": "100mA (0.1A) across the heart can be lethal. Never measure resistance (Ω) or continuity on a powered circuit—it will give false readings or damage the meter.",
+      "troubleshoot": "If your DMM reads '0.00' on every current test, you likely blew the internal ceramic fuse by accidentally probing voltage while the red lead was still in the mA/10A jack!"
+    },
+    "3": {
+      "label": "Measuring Voltage (Parallel Connection)",
+      "what": "Voltage is electrical pressure *difference* between two points, so you touch the probes across a component without breaking the circuit.",
+      "exam_facts": "A voltmeter has extremely high internal resistance (~10MΩ) so it draws almost zero current and doesn't disturb the circuit.",
+      "troubleshoot": "Red probe on positive/high side, Black on Ground (COM). If you get a negative sign (-12.04V), your leads are simply reversed."
+    },
+    "4": {
+      "label": "Measuring Current (Series Connection)",
+      "what": "Current is the flow of electrons *through* a wire, so you must physically break the circuit open and insert the meter in line.",
+      "exam_facts": "An ammeter has near-zero internal resistance. Putting it in parallel across a battery creates a direct dead short!",
+      "troubleshoot": "Start with the red lead in the 10A jack first if you don't know how much current the circuit draws, then move down to mA for precision."
+    }
+  }
+}

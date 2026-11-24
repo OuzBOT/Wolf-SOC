@@ -1,0 +1,42 @@
+{
+  "title": "Core Security Domain 3: Security Architecture, Cloud, ICS/IoT & Resiliency (18%)",
+  "overview": "Covers Cloud models (IaaS/PaaS/SaaS), Serverless/Containers, ICS/SCADA/IoT security, Data States/DLP, and RAID/Backups.",
+  "art": [
+    "  CLOUD SHARED RESPONSIBILITY (?1)               OT / ICS / SCADA & EMBEDDED (?2)",
+    "   On-Prem : [ You Manage Everything ]           [ Enterprise IT ] ◄─(Air Gap / Jump Host)─►",
+    "   IaaS    : Provider=Hardware | You=OS/Apps     [ SCADA / HMI ] ──► [ PLC ] ──► [ Sensors ]",
+    "   PaaS    : Provider=Hardware/OS | You=Code     (Availability > Confidentiality! Patch carefully!)",
+    "   SaaS    : Provider=App/OS/HW | You=Data/IAM",
+    "",
+    "  DATA STATES & PROTECTION (?3)                  RESILIENCY & BACKUPS (?4)",
+    "   • At Rest    -> AES-256 / FDE / TDE           • RAID 0 (Speed) | RAID 1 (Mirror)",
+    "   • In Transit -> TLS 1.3 / IPSec / SSH         • RAID 5 (1-Drive Parity) | RAID 10 (Stripe+Mirror)",
+    "   • In Use     -> Secure Enclaves / TEE         • 3-2-1 Backup Rule (Full/Incremental/Differential)"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Cloud Models, Virtualization, Containers & Serverless",
+      "what": "Defines who is responsible for security controls across cloud deployments and modern compute architectures.",
+      "exam_facts": "Cloud Service Models: IaaS (AWS EC2 - you patch OS/firewall), PaaS (Azure App Service - provider patches OS, you secure your Python/web code), SaaS (Microsoft 365/Salesforce - you manage user IAM/MFA & data classification). Deployment Models: Public, Private, Hybrid, Community. Modern Compute: Virtual Machines (full guest OS per VM on a Type 1 bare-metal Hypervisor; watch for VM Escape attacks) vs Containers/Docker (share host OS kernel, lightweight, immutable) vs Serverless/FaaS (AWS Lambda - event-driven code, zero OS management). CASB (Cloud Access Security Broker): Enforces DLP, visibility, and security policies between users and cloud apps (stops Shadow IT).",
+      "troubleshoot": "In cloud environments, the #1 breach cause isn't hacking the hypervisor—it's customer misconfiguration, such as leaving an AWS S3 storage bucket set to Public Read!"
+    },
+    "2": {
+      "label": "ICS/SCADA, Operational Technology (OT), IoT & Embedded Systems",
+      "what": "Hardware and industrial control systems (power grids, water plants, manufacturing, medical devices) where physical safety and uptime beat everything.",
+      "exam_facts": "ICS/SCADA: PLC (Programmable Logic Controller - ruggedized industrial computer reading sensors & driving motors/valves), HMI (Human-Machine Interface - operator touchscreen), RTU (Remote Terminal Unit). Security Priority: Availability & Safety > Integrity > Confidentiality! Embedded & IoT: RTOS (Real-Time OS - deterministic timing), SoC (System on a Chip), FPGA. Constraints: Low CPU/RAM, proprietary protocols (Modbus, DNP3), long lifecycles where rebooting or patching could shut down a factory.",
+      "troubleshoot": "Never run aggressive active vulnerability scans (like Nmap `-A` or Nessus) directly against live PLCs or medical IoT devices—legacy embedded network stacks can crash and cause physical equipment failure. Isolate them behind a Jump Box / Data Diode!"
+    },
+    "3": {
+      "label": "Data States, Classification, Tokenization & DLP",
+      "what": "Protecting sensitive data (PII, PHI, PCI/cardholder data, IP) whether it is stored on disk, moving across wires, or actively processed in CPU RAM.",
+      "exam_facts": "3 Data States: At Rest (BitLocker FDE, Transparent Data Encryption/TDE on databases), In Transit/Motion (TLS 1.3, HTTPS, IPSec, SFTP), In Use/Processing (Confidential Computing / Hardware Secure Enclaves like Intel SGX). Privacy & Compliance Techniques: Masking (hiding parts of data like `XXX-XX-1234`), Tokenization (replacing sensitive card numbers with a non-sensitive random token mapped in a secure vault—huge for PCI-DSS), Anonymization (irreversibly stripping identifiers), DLP (Data Loss Prevention - blocks unauthorized email/USB/cloud exfiltration of SSNs or source code).",
+      "troubleshoot": "Data Sovereignty laws (like GDPR in Europe) dictate that personal data must remain physically stored within specific geographic borders—always check cloud region settings!"
+    },
+    "4": {
+      "label": "Resiliency: RAID Levels, Backups & High Availability",
+      "what": "Ensuring hardware failures, ransomware, or regional disasters don't permanently destroy data or halt operations.",
+      "exam_facts": "RAID (Redundant Array of Independent Disks - NOT a backup!): RAID 0 (Striping, min 2 disks, fastest, ZERO fault tolerance), RAID 1 (Mirroring, min 2 disks, 50% capacity, survives 1 disk loss), RAID 5 (Striping + Distributed Parity, min 3 disks, survives 1 disk loss), RAID 6 (Dual Parity, min 4 disks, survives 2 disk losses), RAID 10 / 1+0 (Mirrored Stripes, min 4 disks, fast + high fault tolerance). Backups: Full (copies everything, resets archive bit, slow backup/fast restore), Incremental (copies only changes since LAST backup of any type, fastest backup/slowest restore—needs Full + ALL incrementals), Differential (copies changes since last FULL backup—needs Full + latest Differential). 3-2-1 Rule: 3 copies, 2 different media types, 1 offsite/immutable.",
+      "troubleshoot": "To survive Ransomware, backups MUST be immutable (Write-Once-Read-Many / WORM) or offline/air-gapped—attackers routinely encrypt connected network backup shares first!"
+    }
+  }
+}

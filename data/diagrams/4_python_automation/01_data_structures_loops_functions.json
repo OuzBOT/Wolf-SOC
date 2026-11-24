@@ -1,0 +1,40 @@
+{
+  "title": "Python (COMP 666) Module 1: Data Structures, Memory & Functions",
+  "overview": "Covers Lists vs Tuples vs Dicts vs Sets, Big-O lookup speed, Scope (LEGB), and clean Pythonic idioms.",
+  "art": [
+    "  CORE DATA STRUCTURES (?1)(?2)                 FUNCTION STACK & SCOPE (LEGB) (?3)",
+    "   List  [10, 20, 30] -> Ordered, Mutable       Global Scope: CONFIG = {'port': 80}",
+    "   Tuple (10, 20, 30) -> Ordered, IMMUTABLE         │",
+    "   Dict  {'ip': '10.0.0.1'} -> Hash Map O(1)        ▼",
+    "   Set   {22, 80, 443} -> Unique, Fast Lookup   def scan(host):  <── Local Scope",
+    "                                                    return status  (Cleaned up on exit)",
+    "  COMPREHENSIONS & GENERATORS (?4)",
+    "   [x for x in ports if x < 1024]  vs  (x for x in huge_log_file)  <── Lazy RAM!"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Lists vs. Tuples (Mutable vs. Immutable Sequences)",
+      "what": "Ordered collections accessed by zero-based index (`items[0]`). Lists can be modified in place; Tuples are locked once created.",
+      "exam_facts": "List (`[]`): Mutable (`append()`, `pop()`, `sort()`), great for dynamic queues or packet buffers. Tuple (`()`): Immutable, uses less memory, faster to iterate, and hashable (so tuples can be used as Dictionary keys—lists cannot!). Slicing syntax: `seq[start:stop:step]`; `seq[::-1]` reverses any string/list.",
+      "troubleshoot": "Never pass a mutable default argument like `def add_item(item, box=[]):`—Python creates that list ONCE at function definition, causing data to leak across every future function call! Use `box=None` instead."
+    },
+    "2": {
+      "label": "Dictionaries & Sets (O(1) Hash Table Lookups)",
+      "what": "Hash-table-backed structures that find keys or check membership instantaneously regardless of whether there are 10 items or 10 million.",
+      "exam_facts": "Dict (`{k: v}`): Keys must be immutable/hashable; use `.get('key', default)` to avoid `KeyError` crashes when parsing messy JSON or logs. Set (`{a, b}`): Stores only unique values; supports math operations (`|` union, `&` intersection, `-` difference—awesome for comparing firewall allowlists vs active connections!).",
+      "troubleshoot": "Checking `if ip in blocked_ips:` on a `list` scans item-by-item (`O(n)` slow), while on a `set` it jumps straight to the hash bucket (`O(1)` instant)."
+    },
+    "3": {
+      "label": "Functions, *args/**kwargs & LEGB Variable Scope",
+      "what": "Reusable code blocks that encapsulate logic and resolve variable names from innermost to outermost scope.",
+      "exam_facts": "LEGB Order: Local (inside function) -> Enclosing (nested function) -> Global (module top-level) -> Built-in (`len`, `print`). `*args` packs extra positional arguments into a Tuple; `**kwargs` packs extra keyword arguments into a Dict.",
+      "troubleshoot": "Always include `if __name__ == '__main__':` at the bottom of your scripts so other Python files can import your functions without automatically executing your menu loop."
+    },
+    "4": {
+      "label": "List Comprehensions, Generators & Exception Handling",
+      "what": "Pythonic patterns for filtering data cleanly, streaming massive files without exhausting RAM, and handling runtime errors gracefully.",
+      "exam_facts": "List Comprehension `[p for p in ports if p in open_ports]` builds a full list in RAM. Generator Expression `(line for line in open('huge.log'))` yields one item at a time using almost zero memory. `try / except / else / finally`: `else` runs only if no exception occurred; `finally` ALWAYS runs (great for closing serial ports or sockets).",
+      "troubleshoot": "Never write a bare `except:`—it catches `KeyboardInterrupt` (Ctrl+C) and hides real bugs! Catch specific exceptions like `except (ValueError, KeyError) as e:`."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Python (COMP 667) Module 3: Sockets, Subprocesses & Hardware Automation",
+  "overview": "Covers TCP/UDP sockets, HTTP requests, running OS CLI tools with subprocess, and talking to Electronics over Serial/GPIO.",
+  "art": [
+    "  PYTHON SOCKET CLIENT (?1)                      OS CLI AUTOMATION (`subprocess`) (?2)",
+    "   socket.socket(AF_INET, SOCK_STREAM)           subprocess.run(['ping', '-c', '1', ip],",
+    "         │                                           capture_output=True, text=True)",
+    "   .connect(('10.0.0.1', 22)) ──► 3-Way Handshake",
+    "   .sendall(b'DATA') ───────────► Network        HARDWARE / ELECTRONICS BRIDGE (?3)(?4)",
+    "   .recv(1024) ◄──────────────── Banner/Reply    Python (`pyserial` / `gpiozero` / `smbus2`)",
+    "   .close()                                        └─► UART (USB-TTL) / I2C / SPI / PWM Pins"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Network Sockets (`socket`) & Banner Grabbing",
+      "what": "Low-level networking API that lets Python open raw TCP or UDP connections, build port scanners, and inspect service banners.",
+      "exam_facts": "`AF_INET` = IPv4 (`AF_INET6` = IPv6). `SOCK_STREAM` = TCP (reliable stream); `SOCK_DGRAM` = UDP (datagrams). Always call `sock.settimeout(2.0)` before `.connect()` so a firewalled/dropped port doesn't freeze your script forever! `.connect_ex((ip, port))` returns `0` if the TCP port is open.",
+      "troubleshoot": "Sockets transmit raw `bytes`, not Python `str`—use `.encode('utf-8')` before sending text and `.decode('utf-8', errors='ignore')` when reading bytes back."
+    },
+    "2": {
+      "label": "Running System & Lab Commands Safely (`subprocess`)",
+      "what": "Executes external OS utilities (`ping`, `ipconfig`, `nmap`, `openssl`) from Python and captures their `stdout`, `stderr`, and exit return code.",
+      "exam_facts": "`res = subprocess.run(['ping', '-n', '1', host], capture_output=True, text=True, timeout=5)`: `res.returncode == 0` means success; `res.stdout` holds the output string. Pass commands as a LIST of strings with `shell=False` (default) to prevent OS Command Injection vulnerabilities!",
+      "troubleshoot": "Never use `os.system(f'ping {user_input}')`—if `user_input` is `'8.8.8.8 && del *.*'`, `shell=True` executes the attacker's second command!"
+    },
+    "3": {
+      "label": "Talking to Microcontrollers & Test Gear (`pyserial`)",
+      "what": "Communicates over USB-to-Serial (COM ports on Windows, `/dev/ttyUSB0` or `/dev/ttyACM0` on Linux) with Arduinos, ESP32s, and programmable bench power supplies/multimeters (SCPI).",
+      "exam_facts": "`with serial.Serial('COM3', 115200, timeout=1) as ser:` opens the UART link. Must match Baud Rate (e.g., 9600 or 115200), Data bits (8), Parity (None), Stop bits (1) -> '8N1'. Automated lab instruments use SCPI text commands like `ser.write(b'MEAS:VOLT:DC?\\n')`.",
+      "troubleshoot": "Opening a Serial port to an Arduino resets the board automatically—add `time.sleep(2)` right after `serial.Serial()` before sending commands so the bootloader finishes!"
+    },
+    "4": {
+      "label": "Single-Board Computer Hardware Control (`gpiozero` & `smbus2`)",
+      "what": "Controls physical relays, LEDs, PWM motor drivers, and I2C/SPI sensors directly from a Raspberry Pi or Linux SBC.",
+      "exam_facts": "`gpiozero` simplifies digital pins (`LED(17).on()`, `Button(27).when_pressed = callback`, `PWMLED(18).value = 0.5`). `smbus2` reads/writes I2C registers (`bus.read_byte_data(0x48, 0x00)`). Remember: Pi GPIO pins are 3.3V logic ONLY—never feed 5V directly into a Pi pin without a voltage divider or logic-level shifter!",
+      "troubleshoot": "Run `i2cdetect -y 1` in the Linux terminal to verify your sensor's hex address (`0x48`, `0x76`, etc.) is wired properly on SDA/SCL before debugging your Python code."
+    }
+  }
+}

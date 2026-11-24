@@ -1,0 +1,97 @@
+[
+  {
+    "term": "ADC",
+    "definition": "Analog-to-Digital Converter; converts a voltage from a sensor into a digital number a microcontroller can process.",
+    "related": "DAC, PWM, microcontrollers"
+  },
+  {
+    "term": "ALE",
+    "definition": "Annualized Loss Expectancy; expected yearly financial loss, calculated as SLE × ARO.",
+    "related": "SLE, ARO, risk management"
+  },
+  {
+    "term": "CIDR",
+    "definition": "Classless Inter-Domain Routing; slash notation such as /24 that describes an IP network prefix length.",
+    "related": "subnet mask, IPv4"
+  },
+  {
+    "term": "DMM",
+    "definition": "Digital Multimeter; measures voltage, resistance, continuity, and—in the correct series configuration—current.",
+    "related": "COM jack, current, voltage"
+  },
+  {
+    "term": "EDR",
+    "definition": "Endpoint Detection and Response; endpoint telemetry and response tooling used to detect, investigate, and contain suspicious behavior.",
+    "related": "SIEM, SOC, incident response"
+  },
+  {
+    "term": "ESD",
+    "definition": "Electrostatic Discharge; a sudden static-electricity transfer that can damage sensitive electronic components.",
+    "related": "wrist strap, grounded mat"
+  },
+  {
+    "term": "KCL",
+    "definition": "Kirchhoff's Current Law; total current entering a node equals total current leaving it.",
+    "related": "nodes, parallel circuits"
+  },
+  {
+    "term": "KVL",
+    "definition": "Kirchhoff's Voltage Law; the algebraic sum of voltage rises and drops around a closed loop is zero.",
+    "related": "series circuits, voltage drops"
+  },
+  {
+    "term": "MFA",
+    "definition": "Multi-Factor Authentication; authentication using two or more independent factor types such as knowledge, possession, or inherence.",
+    "related": "IAM, phishing resistance"
+  },
+  {
+    "term": "NAC",
+    "definition": "Network Access Control; controls network admission based on identity, device state, or policy—often through 802.1X.",
+    "related": "RADIUS, VLAN, Zero Trust"
+  },
+  {
+    "term": "PKI",
+    "definition": "Public Key Infrastructure; certificate authorities, certificates, policies, and processes that bind public keys to identities.",
+    "related": "X.509, TLS, OCSP"
+  },
+  {
+    "term": "PWM",
+    "definition": "Pulse Width Modulation; rapidly switches a digital signal on and off to control average power or approximate an analog output.",
+    "related": "duty cycle, motor control, LEDs"
+  },
+  {
+    "term": "RPO",
+    "definition": "Recovery Point Objective; the maximum acceptable amount of data loss, measured in time.",
+    "related": "RTO, backups, disaster recovery"
+  },
+  {
+    "term": "RTO",
+    "definition": "Recovery Time Objective; the maximum acceptable downtime after an outage.",
+    "related": "RPO, disaster recovery"
+  },
+  {
+    "term": "SIEM",
+    "definition": "Security Information and Event Management; centralizes, normalizes, correlates, and alerts on security telemetry.",
+    "related": "SOAR, logs, SOC"
+  },
+  {
+    "term": "SLE",
+    "definition": "Single Loss Expectancy; the cost of one loss event, calculated as asset value × exposure factor.",
+    "related": "ALE, ARO, risk management"
+  },
+  {
+    "term": "SOAR",
+    "definition": "Security Orchestration, Automation, and Response; coordinates approved response workflows across security tools.",
+    "related": "SIEM, playbooks, incident response"
+  },
+  {
+    "term": "VLAN",
+    "definition": "Virtual Local Area Network; a logical Layer 2 network segment and separate broadcast domain on shared switch infrastructure.",
+    "related": "802.1Q, trunks, inter-VLAN routing"
+  },
+  {
+    "term": "Zero Trust",
+    "definition": "A security model that continuously verifies identity, device posture, context, and least privilege rather than trusting network location.",
+    "related": "PEP, policy engine, NAC"
+  }
+]

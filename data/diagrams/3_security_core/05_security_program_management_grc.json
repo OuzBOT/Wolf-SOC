@@ -1,0 +1,41 @@
+{
+  "title": "Core Security Domain 5: Governance, Risk, Compliance & Audits (20%)",
+  "overview": "Covers GRC policies, Quantitative/Qualitative Risk math (SLE/ALE), Vendor Agreements, Privacy/Compliance, and Pen-Testing/Audits.",
+  "art": [
+    "  GOVERNANCE HIERARCHY (?1)                      QUANTITATIVE RISK MATH (?2)",
+    "   [ Policy ]     (Mandatory High-Level Rules)   SLE = Asset Value (AV) × Exposure Factor (EF)",
+    "       │                                         ALE = SLE × Annualized Rate of Occurrence (ARO)",
+    "   [ Standard ]   (Mandatory Specs: AES-256)     Risk Choices: Mitigate | Transfer | Accept | Avoid",
+    "       │",
+    "   [ Procedure ]  (Step-by-Step How-To / SOP)    AUDITS & PENETRATION TESTING (?4)",
+    "   [ Guideline ]  (Recommended Best Practice)    • Known (White) | Partial (Gray) | Unknown (Black)",
+    "   VENDOR RISK & AGREEMENTS (?3)                 • Rules of Engagement (RoE) | Attestation",
+    "   NDA | SLA | MSA/SOW | Right-to-Audit"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Security Governance: Policies, Standards, Procedures & Guidelines",
+      "what": "Defines management's security expectations, mandatory technical baselines, and actionable workflows across the organization.",
+      "exam_facts": "Policies (mandatory high-level management intent: AUP/Acceptable Use Policy, Password Policy, BYOD Policy, Clean Desk Policy, Separation of Duties, Mandatory Vacation/Job Rotation to catch fraud). Standards (mandatory specific requirements: 'All laptops must use AES-256 BitLocker'). Procedures / SOPs (step-by-step instructions to implement a standard). Guidelines (non-mandatory recommendations/best practices). Boards & Roles: Data Owner (senior exec accountable for data classification), Data Custodian (IT/SysAdmin managing backups & permissions), Data Controller (determines why/how PII is processed under GDPR), Data Processor (processes data on behalf of Controller), DPO (Data Protection Officer).",
+      "troubleshoot": "Exam Trap: Separation of Duties prevents one person from controlling an entire critical process alone (e.g., the developer who writes code shouldn't approve it into production); Least Privilege restricts users to only the minimum permissions needed for their job."
+    },
+    "2": {
+      "label": "Risk Management, BIA & Quantitative Formulas (SLE / ALE)",
+      "what": "Identifies assets, evaluates threats/vulnerabilities, calculates financial impact, and decides how to treat each risk.",
+      "exam_facts": "Quantitative Risk Formulas (Dollar-based): Asset Value (AV) = item cost. Exposure Factor (EF) = % of asset lost if threat occurs (e.g., 50% = 0.50). Single Loss Expectancy (SLE) = AV × EF. Annualized Rate of Occurrence (ARO) = times per year it happens (e.g., once every 2 years = 0.5). Annualized Loss Expectancy (ALE) = SLE × ARO. (Only buy a safeguard if its annual cost is LESS than the ALE!). Qualitative Risk: Subjective High/Medium/Low Heat Map Matrix. 4 Risk Responses: Mitigate/Reduce (install patches/firewalls), Transfer/Share (buy cyber insurance or outsource), Accept (document in Risk Register when cost of fix > ALE), Avoid (stop doing the risky activity). BIA (Business Impact Analysis): Identifies Mission-Essential Functions, Single Points of Failure, RTO, RPO, MTBF, and MTTR.",
+      "troubleshoot": "Quick Math Check: Server AV = $10,000, fire destroys 50% (EF = 0.5) -> SLE = $5,000. Happens once every 5 years (ARO = 0.2) -> ALE = $5,000 × 0.2 = $1,000/year."
+    },
+    "3": {
+      "label": "Third-Party Vendor Risk & Legal Agreements",
+      "what": "Manages supply-chain security risks and contractual obligations before sharing data or connecting networks with outside companies.",
+      "exam_facts": "NDA (Non-Disclosure Agreement - protects confidential info/trade secrets). SLA (Service Level Agreement - legally binding uptime/response guarantees with penalties, e.g., 99.99% uptime). MOU (Memorandum of Understanding - non-binding statement of shared goals/intent). MOA (Memorandum of Agreement - more formal conditional agreement). MSA (Master Service Agreement - overarching contract terms for ongoing work) + SOW (Statement of Work - specific project deliverables/timelines). BPA (Business Partners Agreement). Right-to-Audit Clause: Allows your organization to inspect a vendor's security controls. Supply Chain Risk: Vetting hardware/software vendors to prevent compromised firmware or malicious dependencies.",
+      "troubleshoot": "If a vendor suffers a breach via an API connection into your network, your company still owns the regulatory liability—always enforce Least Privilege API scopes and Vendor Risk Assessments!"
+    },
+    "4": {
+      "label": "Security Audits, Assessments & Penetration Testing",
+      "what": "Verifies compliance with laws/frameworks and actively tests defenses using authorized ethical hacking.",
+      "exam_facts": "Compliance & Frameworks: PCI-DSS (credit card security), HIPAA (US healthcare privacy/PHI), GDPR (EU personal data privacy & Right to be Forgotten), SOX (financial reporting integrity), NIST CSF (Identify, Protect, Detect, Respond, Recover), ISO/IEC 27001 (ISMS certification), SOC 2 Type I (controls designed properly at a single point in time) vs SOC 2 Type II (controls operating effectively over 6–12 months—much stronger!). Penetration Testing: Known Environment / White Box (full source code/diagrams provided), Partially Known / Gray Box (limited user credentials/partial info), Unknown Environment / Black Box (zero prior info—simulates external attacker). Rules of Engagement (RoE): Written authorization defining scope, allowed IPs, timing, and emergency contacts BEFORE scanning starts. Passive Reconnaissance (OSINT, DNS lookups, Shodan—no packets sent to target) vs Active Reconnaissance (Nmap port scans, banner grabbing).",
+      "troubleshoot": "Never run a single port scan or exploit without a signed Rules of Engagement (RoE) / Get-Out-of-Jail-Free authorization letter—scanning unauthorized IPs is illegal under the CFAA!"
+    }
+  }
+}

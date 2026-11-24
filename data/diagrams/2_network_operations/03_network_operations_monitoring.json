@@ -1,0 +1,40 @@
+{
+  "title": "Networking Domain 3: Monitoring, Documentation, HA & DR (19%)",
+  "overview": "Covers SNMP/Syslog/NetFlow monitoring, network documentation, RPO/RTO disaster recovery metrics, and High Availability.",
+  "art": [
+    "  NETWORK TELEMETRY & LOGGING (?1)             DISASTER RECOVERY TIMELINE (?3)",
+    "   [ Switch / Router ]                         ◄─── RPO ───►│◄─── RTO ───►",
+    "     ├─ SNMP (UDP 161/162) ─► NMS Server       (Last Backup)  (Outage)  (Back Online)",
+    "     ├─ Syslog (UDP 514)   ─► Log Collector",
+    "     └─ NetFlow / IPFIX    ─► Traffic Analyzer  HIGH AVAILABILITY & SITES (?4)",
+    "                                                • Active-Active vs Active-Passive",
+    "  DOCUMENTATION & BASELINES (?2)                • Hot Site -> Warm Site -> Cold Site",
+    "   • Physical vs Logical Topology               • SLA / MTBF / MTTR Metrics"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Network Monitoring: SNMP, Syslog, NetFlow & Packet Capture",
+      "what": "Tools used to track device health, hardware alerts, event logs, and bandwidth usage across the enterprise.",
+      "exam_facts": "SNMP (UDP 161 polling / UDP 162 Traps): Queries MIBs using OIDs. Always use SNMPv3 (adds encryption & authentication—v1/v2c send community strings in plain text!). Syslog (UDP 514): Centralizes event logs ranked by Severity 0 (Emergency) to 7 (Debug). NetFlow/sFlow/IPFIX: Analyzes traffic flows/bandwidth talkers without capturing full packet payloads.",
+      "troubleshoot": "Set up a SPAN (Port Mirroring) port on a switch when you need to copy live traffic from one port to a Wireshark analyzer without interrupting the link."
+    },
+    "2": {
+      "label": "Network Documentation, Baselines & Change Management",
+      "what": "Standard operating records that let any technician understand how the network is built and spot abnormal behavior fast.",
+      "exam_facts": "Logical Diagram (IP subnets, VLANs, routing protocols) vs Physical Diagram (cable runs, rack elevations, MDF/IDF patch panels). Performance Baseline: Captures normal CPU, memory, and bandwidth usage so you can prove when something is abnormal. Change Management: Requires risk assessment, rollback plan, and maintenance window approval before touching production configs.",
+      "troubleshoot": "Always back up a switch/router's running-config (`copy run start` + TFTP/SCP backup) BEFORE applying firmware updates or ACL changes!"
+    },
+    "3": {
+      "label": "Disaster Recovery (DR) Metrics: RPO, RTO, MTTR & MTBF",
+      "what": "Business Continuity and Disaster Recovery metrics that define how much data a company can afford to lose and how fast systems must recover.",
+      "exam_facts": "RPO (Recovery Point Objective): Maximum acceptable amount of data loss measured in time (e.g., hourly backups = 1-hour RPO). RTO (Recovery Time Objective): Maximum acceptable downtime after an outage. MTBF (Mean Time Between Failures): Average lifespan/reliability of hardware. MTTR (Mean Time To Repair): Average time to fix a broken component.",
+      "troubleshoot": "If a mission-critical database requires near-zero RPO and RTO, standard nightly tape backups won't cut it—you need real-time synchronous replication and automated failover."
+    },
+    "4": {
+      "label": "High Availability (HA), Redundancy & Recovery Sites",
+      "what": "Eliminating Single Points of Failure (SPOF) across power, hardware, links, and physical facilities.",
+      "exam_facts": "Active-Active (both units share traffic load simultaneously) vs Active-Passive (standby unit takes over only if primary fails via FHRP/CARP/VRRP). Cold Site (empty building/power only, cheapest, weeks to setup) vs Warm Site (racks & network gear ready, needs data restore) vs Hot Site (live mirror, instant failover, most expensive).",
+      "troubleshoot": "True power redundancy requires dual PSUs plugged into SEPARATE UPS battery backups fed by SEPARATE electrical circuits/PDUs."
+    }
+  }
+}

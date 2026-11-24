@@ -1,0 +1,42 @@
+{
+  "title": "Core Security Domain 4: Security Operations, IAM, SIEM & Incident Response (28%)",
+  "overview": "Covers Identity & Access Management (IAM/SSO/MFA), SIEM/SOAR/EDR monitoring, Incident Response lifecycle, and Digital Forensics.",
+  "art": [
+    "  IDENTITY, ACCESS & FEDERATION (?1)            SOC & LOG CORRELATION PIPELINE (?2)",
+    "   • MFA: Something You Know + Have + Are        [ Firewall / EDR / DNS / Syslog ]",
+    "   • RBAC (Role) | ABAC (Attribute) | DAC/MAC                 │",
+    "   • SAML (Enterprise XML SSO) | OAuth (API)     ┌────────────▼────────────┐",
+    "   • PAM (Privileged Access / JIT / Vaulting)    │   SIEM (Correlates)     │",
+    "                                                 └────────────┬────────────┘",
+    "  INCIDENT RESPONSE (PICERL) (?3)                             ▼",
+    "   1.Preparation -> 2.Identification ->          [ SOAR (Automated Playbook) ]",
+    "   3.Containment -> 4.Eradication ->",
+    "   5.Recovery    -> 6.Lessons Learned            FORENSICS: Volatile -> Non-Volatile (?4)"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Identity & Access Management (IAM), Federation & PAM",
+      "what": "Controls authentication, authorization, and privileged accounts across local directories and cloud platforms.",
+      "exam_facts": "Authentication Factors: Knowledge (password/PIN), Possession (FIDO2/WebAuthn hardware key, smart card, TOTP authenticator app—avoid SMS due to SIM swapping), Inherence (biometrics: FAR = False Acceptance Rate, FRR = False Rejection Rate, CER = Crossover Error Rate where FAR=FRR, lower is more accurate). Access Control Models: MAC (Mandatory - OS/security clearances, strictest), DAC (Discretionary - file owner sets permissions), RBAC (Role-Based - job title/group), ABAC (Attribute-Based - evaluates user + time + IP + device compliance). Federation/SSO: SAML 2.0 (XML-based enterprise SSO), OAuth 2.0 (delegated API authorization tokens—'Log in with Google'), OIDC (OpenID Connect - adds authentication layer on top of OAuth 2.0), Kerberos (ticket-based Active Directory auth using TGT & TCP/UDP 88; requires NTP time sync within 5 mins!). PAM: Privileged Access Management—password vaulting, session recording, and JIT (Just-In-Time) temporary admin elevation.",
+      "troubleshoot": "If Kerberos authentication suddenly fails across an entire Windows domain, check NTP (Port 123) time synchronization first—clock skew >5 minutes breaks Kerberos tickets!"
+    },
+    "2": {
+      "label": "SOC Monitoring: SIEM, SOAR, EDR, Threat Feeds & Logs",
+      "what": "Centralizes security telemetry from across the network to detect intrusions, correlate alerts, and automate incident containment.",
+      "exam_facts": "SIEM (Security Information & Event Management): Aggregates logs, normalizes formats, correlates events across sources, and triggers alerts. SOAR (Security Orchestration, Automation & Response): Executes automated Python/YAML playbooks (e.g., auto-isolating an infected host or blocking a malicious IP on the firewall). Vulnerability & Threat Intel: STIX/TAXII (structured threat intelligence sharing format & transport), MITRE ATT&CK (matrix of adversary Tactics, Techniques & Procedures / TTPs), IoC (Indicators of Compromise - file hashes, malicious IPs/domains). Email & DNS Security: DNS Sinkhole (redirects malicious C2 domain queries to a safe internal server to identify infected hosts).",
+      "troubleshoot": "False Positive (alert fires when no attack exists—causes alert fatigue) vs False Negative (real attack happens with ZERO alert—the most dangerous outcome!)."
+    },
+    "3": {
+      "label": "Incident Response Lifecycle (PICERL) & Tabletop Exercises",
+      "what": "The standardized 6-step process for handling a security breach cleanly without destroying evidence or re-infecting the network.",
+      "exam_facts": "1. Preparation (IR plan, call trees, forensic jump bag, backups, tabletop exercises). 2. Identification (detecting anomalies, scoping affected hosts, declaring an incident). 3. Containment (stopping the spread—short-term isolation like unplugging Ethernet/disabling Wi-Fi or quarantining via EDR, plus long-term segmentation). 4. Eradication (removing root cause: wiping/reimaging infected systems, deleting persistence/scheduled tasks, patching the exploited flaw). 5. Recovery (restoring clean data from verified backups, monitoring closely as systems return to production). 6. Lessons Learned (blameless post-incident review within ~2 weeks to update policies/controls).",
+      "troubleshoot": "Exam Trap: Never skip straight from Identification to Eradication (wiping a machine) before Containment and forensic preservation—wiping destroys volatile RAM evidence and lets worm-like malware keep spreading to uncontained machines!"
+    },
+    "4": {
+      "label": "Digital Forensics, Chain of Custody & Order of Volatility",
+      "what": "Collecting, preserving, and analyzing digital evidence so it remains legally admissible in court or internal investigations.",
+      "exam_facts": "Order of Volatility (RFC 3227 - collect MOST fleeting data first before pulling the power plug!): (1) CPU Registers & Cache, (2) System RAM / Memory Dump (holds active encryption keys, running processes, network sockets, fileless malware!), (3) Swap File / Pagefile, (4) Hard Drive / SSD (clone bit-for-bit using a Hardware Write Blocker, then hash with SHA-256), (5) Remote Logs / Monitoring Data, (6) Physical Archival Media / Backups. Chain of Custody: Chronological paper/digital log documenting every person who collected, transferred, stored, or analyzed evidence (who, what, when, where, why).",
+      "troubleshoot": "Never analyze a suspect's original hard drive directly—create a bit-stream forensic image (`dd` / FTK Imager) through a hardware write blocker and verify matching SHA-256 hashes before and after!"
+    }
+  }
+}

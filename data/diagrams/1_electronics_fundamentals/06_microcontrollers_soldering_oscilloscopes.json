@@ -1,0 +1,42 @@
+{
+  "title": "Electronics Fundamentals Module 6: Microcontrollers, Soldering, Oscilloscopes & Serial Buses",
+  "overview": "Covers ADC/DAC conversion, PWM, UART/I2C/SPI protocols, IPC soldering standards, and oscilloscope ground-clip safety.",
+  "art": [
+    "  MIXED-SIGNAL & PYTHON INTERFACE (?1)(?2)      SOLDER JOINT PROFILE (?3)",
+    "   Analog Sensor ──► [ ADC ] ──► [ MCU / Pi ]         Good Joint    Cold Joint",
+    "   (0V - 3.3V)       (10-bit)      │  │  │               /\\            (  )",
+    "                                 UART I2C SPI           /  \\          /    \\",
+    "   Motor / LED   ◄── [ PWM ] ◄─────┘                  /____\\        /______\\",
+    "   (Duty Cycle %)                                    (Concave)    (Dull/Blobby)",
+    "",
+    "  OSCILLOSCOPE PROBE GROUNDING (?4)",
+    "   [ Signal Tip ] ───► Test Point (e.g. +5V Signal)",
+    "   [ Ground Clip] ───► Circuit GND ONLY! (Tied to AC Wall Earth Ground!)"
+  ],
+  "nodes": {
+    "1": {
+      "label": "ADC, DAC & PWM (Bridging Analog and Digital)",
+      "what": "ADC (Analog-to-Digital Converter) turns real-world voltages (like temperature sensors) into binary numbers. PWM (Pulse Width Modulation) fakes analog output using fast digital pulses.",
+      "exam_facts": "10-bit ADC = 2^10 = 1,024 steps (0–1023). PWM Duty Cycle = (Time ON / Total Period) × 100%—used to dim LEDs or control DC motor speed efficiently without wasting heat.",
+      "troubleshoot": "If an ADC reading is stuck at max (1023) or 0, check your sensor's ground reference and verify you didn't exceed the microcontroller's max input voltage (3.3V on Raspberry Pi/ESP32 vs 5V on Arduino Uno)."
+    },
+    "2": {
+      "label": "Serial Hardware Buses: UART, I2C & SPI",
+      "what": "The three standard ways microcontrollers, sensors, and Python scripts (`pyserial` / `smbus`) talk to each other over wires.",
+      "exam_facts": "UART (2 wires: TX->RX, RX<-TX, asynchronous, requires matching Baud rate like 9600/115200). I2C (2 wires: SDA data, SCL clock, supports 100+ addressed devices, needs pull-up resistors). SPI (4 wires: MOSI, MISO, SCLK, CS—fastest full-duplex).",
+      "troubleshoot": "90% of UART issues come from forgetting to cross TX to RX, forgetting a shared GND wire between devices, or mismatched baud rates (which prints garbled symbols)."
+    },
+    "3": {
+      "label": "IPC Soldering & Desoldering Standards",
+      "what": "Joining components mechanically and electrically using melted solder alloy (60/40 or 63/37 Tin-Lead, or Lead-Free SAC305) and flux.",
+      "exam_facts": "IPC-A-610 standard: A good through-hole joint has a smooth, shiny, concave fillet wetting both the pad and the lead. Flux removes oxidation so solder flows properly.",
+      "troubleshoot": "A dull, grainy, ball-shaped 'cold solder joint' happens when the iron wasn't hot enough, the pad wasn't heated equally with the pin, or the part moved while cooling—reheat with fresh flux!"
+    },
+    "4": {
+      "label": "Oscilloscope Operation & Earth Ground Warning",
+      "what": "Measures voltage over time so you can inspect waveforms, noise, ripple, and serial data pulses.",
+      "exam_facts": "Key controls: Volts/Div (vertical amplitude), Seconds/Div (horizontal timebase), and Trigger (freezes a repeating waveform on screen). 10X probe setting reduces circuit loading and increases bandwidth.",
+      "troubleshoot": "CRITICAL: The alligator ground clip on a bench oscilloscope is connected directly to Earth Ground through the wall plug! Clipping it onto a non-ground voltage point creates a dead short and can blow up your circuit or probe!"
+    }
+  }
+}

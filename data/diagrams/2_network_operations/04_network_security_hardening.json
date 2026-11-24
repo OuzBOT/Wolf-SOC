@@ -1,0 +1,38 @@
+{
+  "title": "Networking Domain 4: Network Security, Hardening, VPNs & Attacks (14%)",
+  "overview": "Covers Zero Trust, AAA/802.1X NAC, Firewalls/ACLs, IPSec/TLS VPNs, and Layer 2/Layer 3 network attacks.",
+  "art": [
+    "  DEFENSE-IN-DEPTH & PERIMETER (?1)(?2)         COMMON NETWORK ATTACKS (?3)(?4)",
+    "   [ Internet ]                                 • ARP Spoofing  -> Mitigate: DAI",
+    "        │                                       • DHCP Starve   -> Mitigate: DHCP Snooping",
+    "   [ NGFW / IDS / IPS ]                         • VLAN Hopping  -> Mitigate: Disable DTP",
+    "     ├─ Screened Subnet (DMZ) -> Web/DNS        • Evil Twin AP   -> Mitigate: 802.1X/WPA3",
+    "     └─ Internal LAN -> 802.1X NAC + Zero Trust • DDoS / SYN Flood -> Mitigate: Rate Limit"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Zero Trust Architecture, AAA & 802.1X NAC",
+      "what": "Modern security assumes the internal network is already hostile ('Never Trust, Always Verify') and authenticates every user and device before granting access.",
+      "exam_facts": "AAA: Authentication (who are you?), Authorization (what can you access?), Accounting (logging what you did). Protocols: RADIUS (UDP 1812/1813, encrypts password only, standard for Wi-Fi/VPN) vs TACACS+ (TCP 49, Cisco proprietary, encrypts entire packet, separates AAA for router/switch admin). 802.1X (NAC): Uses EAP, Supplicant (client), Authenticator (switch/AP), and Authentication Server (RADIUS) to quarantine non-compliant devices into a remediation VLAN.",
+      "troubleshoot": "If a workstation gets stuck on a Guest/Remediation VLAN instead of the Corporate VLAN, check its 802.1X machine certificate or RADIUS server reachability."
+    },
+    "2": {
+      "label": "Firewalls, ACLs, Screened Subnets (DMZ) & VPNs",
+      "what": "Controls traffic boundaries between trusted internal networks, semi-trusted public servers, and remote users.",
+      "exam_facts": "ACLs process rules TOP-TO-BOTTOM and end with an invisible 'Implicit Deny All'—always put specific permit rules above broad deny rules! Screened Subnet (formerly DMZ): Isolates public-facing servers (web/email) between two firewalls so a breach doesn't reach the internal LAN. VPNs: IPSec (Layer 3, uses AH for integrity and ESP for encryption+integrity, Tunnel vs Transport mode) vs SSL/TLS VPN (Layer 4-7, port 443, easy client/browser remote access).",
+      "troubleshoot": "If you add a new 'Permit' rule to the bottom of an existing ACL and traffic is still blocked, you probably placed it *below* an explicit 'Deny Any' line!"
+    },
+    "3": {
+      "label": "Layer 2 Switch Attacks & Hardening Mitigations",
+      "what": "Attacks targeting Ethernet frames, MAC tables, and VLAN boundaries on the local switch.",
+      "exam_facts": "MAC Flooding (overflows switch CAM table so it fails open as a hub) -> Mitigate with Port Security (sticky MAC / max MAC limit). ARP Spoofing/Poisoning (attacker sends fake ARP replies for Man-in-the-Middle) -> Mitigate with Dynamic ARP Inspection (DAI). Rogue DHCP Server / DHCP Starvation -> Mitigate with DHCP Snooping (sets trusted uplink ports vs untrusted client ports). VLAN Hopping (Switch Spoofing / Double Tagging) -> Mitigate by disabling DTP (Dynamic Trunking Protocol) and changing Native VLAN away from VLAN 1.",
+      "troubleshoot": "Enable BPDU Guard on all user access ports so plugging an unauthorized switch into a wall jack immediately shuts the port down (`err-disabled`) instead of hijacking Spanning Tree."
+    },
+    "4": {
+      "label": "Wireless, DNS & Volumetric Attacks (DoS/DDoS)",
+      "what": "Attacks aimed at hijacking wireless clients, poisoning name resolution, or exhausting bandwidth/CPU.",
+      "exam_facts": "Evil Twin (rogue AP broadcasting the exact same SSID to steal credentials) & Deauthentication Flood (spoofed management frames kicking clients off Wi-Fi—mitigated by 802.11w Protected Management Frames / WPA3). DNS Poisoning (corrupts DNS cache to redirect users to fake sites—mitigated by DNSSEC). On-Path Attack (formerly Man-in-the-Middle). MAC Spoofing (cloning an allowed MAC address to bypass weak MAC filtering).",
+      "troubleshoot": "Never rely on 'SSID Hiding' or 'MAC Filtering' as real wireless security—both can be bypassed in seconds with basic packet sniffing."
+    }
+  }
+}

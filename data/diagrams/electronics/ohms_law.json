@@ -1,0 +1,50 @@
+{
+  "title": "Ohm's Law & Basic DC Circuit",
+  "overview": "A 12 V source, a 4 Ω load, and the relationship between voltage, current, resistance, and power.",
+  "art": [
+    "   + ──[ Fuse ]──[ Switch ]──┐",
+    "   │                         │",
+    " ( V ) 12V DC (?1)         ┌─┴─┐",
+    "   │   Source              │   │  R = 4Ω Load (?2)",
+    "   - ──────────────────────┴─┬─┘",
+    "                             │",
+    "   I = V / R  ──►  12V / 4Ω = 3 Amps (?3)",
+    "",
+    "   ┌───────────────────────────┐",
+    "   │         /   \\             │",
+    "   │        /  V  \\            │   V = I × R",
+    "   │       /───────\\           │   I = V / R",
+    "   │      /  I │ R  \\ (?4)     │   R = V / I",
+    "   └───────────────────────────┘"
+  ],
+  "nodes": {
+    "1": {
+      "label": "DC Voltage Source",
+      "answer_aliases": ["source", "12 volt source", "12v source", "voltage source"],
+      "what": "The supply provides 12 volts of electrical potential difference to drive current through the circuit.",
+      "exam_facts": "Voltage is measured in volts (V) and is measured in parallel across two points.",
+      "troubleshoot": "Verify source voltage first with the meter set to DC volts before diagnosing the rest of a circuit."
+    },
+    "2": {
+      "label": "Resistive Load",
+      "answer_aliases": ["load", "resistor", "4 ohm resistor", "4 ohm load"],
+      "what": "The 4-ohm load resists current flow and converts electrical energy into another form such as heat, light, or motion.",
+      "exam_facts": "Resistance is measured in ohms (Ω). In a simple series circuit, total resistance is the sum of each series resistance.",
+      "troubleshoot": "With power removed, measure resistance across the load; an open component typically reads OL or extremely high resistance."
+    },
+    "3": {
+      "label": "Ohm's Law Current Calculation",
+      "answer_aliases": ["ohms law", "ohm law", "current calculation", "3 amps", "3 amperes"],
+      "what": "Current equals voltage divided by resistance: 12 volts divided by 4 ohms equals 3 amperes.",
+      "exam_facts": "Ohm's Law: V = I × R, I = V / R, R = V / I. Power can be found with P = V × I.",
+      "troubleshoot": "Measure current only in series, with the meter lead in the correct current jack and the circuit opened safely."
+    },
+    "4": {
+      "label": "Ohm's Law Formula Triangle",
+      "answer_aliases": ["formula triangle", "ohms law triangle", "voltage current resistance triangle"],
+      "what": "A visual memory aid for rearranging Ohm's Law when solving for voltage, current, or resistance.",
+      "exam_facts": "Cover the unknown: V over I and R means V = I × R; I = V / R; R = V / I.",
+      "troubleshoot": "Write units beside every value: volts, amps, and ohms. Incorrect units often reveal a calculation or meter-setting mistake."
+    }
+  }
+}

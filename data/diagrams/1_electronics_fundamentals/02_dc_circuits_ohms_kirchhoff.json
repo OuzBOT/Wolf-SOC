@@ -1,0 +1,53 @@
+{
+  "title": "Electronics Fundamentals Module 2: DC Circuits, Series/Parallel & Kirchhoff's Laws",
+  "overview": "Covers Ohm's Law, Watt's Law, Series vs. Parallel rules, KVL, and KCL for troubleshooting DC breadboard circuits.",
+  "art": [
+    "  SERIES CIRCUIT (?1)                         PARALLEL CIRCUIT (?2)",
+    "   ┌───[ R1: 100Ω ]───[ R2: 200Ω ]───┐         ┌──────┬──────────┬──────────┐",
+    "  (+) 12V                            │        (+)    [R1]       [R2]        │",
+    "   │                                 │        12V   100Ω       100Ω       │",
+    "   └──────────────( I = 40mA )───────┘         └──────┴──────────┴──────────┘",
+    "   • Current (I) is SAME everywhere            • Voltage (V) is SAME on branches",
+    "   • R_total = R1 + R2 = 300Ω                  • R_total = (R1×R2)/(R1+R2) = 50Ω",
+    "",
+    "  KIRCHHOFF'S VOLTAGE LAW (KVL) (?3)          KIRCHHOFF'S CURRENT LAW (KCL) (?4)",
+    "   +12V Source - 4V(R1) - 8V(R2) = 0V           I_in (100mA) ──► ( NODE ) ──┬─► 60mA",
+    "   (All voltage drops equal source!)            (Current in = Current out!) └─► 40mA"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Series Circuit Rules & Voltage Drops",
+      "what": "Components connected end-to-end along a single path. Current has nowhere else to go, so amperage stays identical through every resistor.",
+      "exam_facts": "R_total = R1 + R2 + R3... | I_total = I1 = I2 | V_total = V1 + V2. Bigger resistors drop more voltage (V = I × R).",
+      "troubleshoot": "If one component opens (burns out) in a series circuit, current drops to 0A everywhere, and you will measure the FULL source voltage across the broken/open component."
+    },
+    "2": {
+      "label": "Parallel Circuit Rules & Branch Resistance",
+      "what": "Components connected across the same two voltage rails. Every branch gets full source voltage, while total current splits across paths.",
+      "exam_facts": "V_total = V1 = V2 | I_total = I1 + I2 | 1/R_total = 1/R1 + 1/R2. Total resistance in parallel is ALWAYS smaller than the smallest individual resistor!",
+      "troubleshoot": "If one branch opens in parallel, the other branches keep working normally, but total circuit current (I_total) decreases."
+    },
+    "3": {
+      "label": "Kirchhoff's Voltage Law (KVL) & Watt's Law",
+      "answer_aliases": [
+        "kvl",
+        "kirchhoff voltage law",
+        "voltage law"
+      ],
+      "what": "The sum of all voltage rises (sources) and voltage drops (loads) around any closed loop equals zero.",
+      "exam_facts": "Watt's Law for Power: P = I × V (also P = I²R and P = V²/R). Standard breadboard resistors are rated for 1/4 Watt (0.25W)—exceeding this makes them smoke!",
+      "troubleshoot": "If your voltage drops don't add up to your power supply voltage on a breadboard, check for a bad jumper wire or loose ground rail."
+    },
+    "4": {
+      "label": "Kirchhoff's Current Law (KCL)",
+      "answer_aliases": [
+        "kcl",
+        "kirchhoff current law",
+        "current law"
+      ],
+      "what": "Total current entering a junction (node) must equal the total current leaving that node—electrons don't vanish or pile up.",
+      "exam_facts": "I_entering = I_leaving. Used to analyze combination (series-parallel) circuits and current dividers.",
+      "troubleshoot": "A sudden spike in total current draw on your bench power supply usually means a short circuit (a component failed closed or a wire bridged to ground)."
+    }
+  }
+}

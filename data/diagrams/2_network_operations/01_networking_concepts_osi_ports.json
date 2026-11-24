@@ -1,0 +1,50 @@
+{
+  "title": "Networking Domain 1: OSI Model, Encapsulation, Ports & IP Basics (23%)",
+  "overview": "Covers OSI/TCP-IP layers, PDUs, TCP vs UDP, high-frequency exam ports, and IPv4/IPv6 fundamentals.",
+  "art": [
+    "  OSI LAYER   │ TCP/IP MODEL   │ PDU     │ KEY TECH & PORTS TO MEMORIZE",
+    " ─────────────┼────────────────┼─────────┼─────────────────────────────────────",
+    "  7 App       │                │         │ HTTP(80) HTTPS(443) DNS(53) SSH(22) (?1)",
+    "  6 Pres      │ Application    │ Data    │ TLS/SSL, JPEG, ASCII, Encryption",
+    "  5 Session   │                │         │ NetBIOS, RPC, SQL Session Control",
+    " ─────────────┼────────────────┼─────────┼─────────────────────────────────────",
+    "  4 Transport │ Transport      │ Segment │ TCP (Reliable) vs UDP (Fast) Ports  (?2)",
+    " ─────────────┼────────────────┼─────────┼─────────────────────────────────────",
+    "  3 Network   │ Internet       │ Packet  │ IPv4/IPv6, ICMP, Routers, ARP/NDP   (?3)",
+    " ─────────────┼────────────────┼─────────┼─────────────────────────────────────",
+    "  2 Data Link │ Network        │ Frame   │ MAC Address, Switches, 802.1Q VLANs (?4)",
+    "  1 Physical  │ Interface      │ Bits    │ Cat6/6a, Fiber (SMF/MMF), Wi-Fi     (?5)"
+  ],
+  "nodes": {
+    "1": {
+      "label": "Application Layer & Must-Know Exam Ports",
+      "what": "Provides network services directly to end-user applications. Certification exams test heavily on port numbers, TCP vs UDP, and secure vs insecure protocols.",
+      "exam_facts": "FTP(20/21 TCP), SSH/SFTP/SCP(22 TCP), Telnet(23 TCP-insecure), SMTP(25 TCP), DNS(53 TCP/UDP), DHCP(67/68 UDP), TFTP(69 UDP), HTTP(80 TCP), Kerberos(88 TCP/UDP), POP3(110 TCP), NTP(123 UDP), IMAP(143 TCP), SNMP(161/162 UDP), LDAP(389 TCP/UDP), HTTPS(443 TCP), SMB(445 TCP), Syslog(514 UDP), LDAPS(636 TCP), RDP(3389 TCP).",
+      "troubleshoot": "If a web browser gives a DNS_PROBE_FINISHED_NXDOMAIN error, IP connectivity might be fine, but DNS (Port 53) resolution is failing—test by pinging 1.1.1.1 vs google.com."
+    },
+    "2": {
+      "label": "Transport Layer (TCP vs UDP & Multiplexing)",
+      "what": "Handles host-to-host communication, breaks data into Segments (TCP) or Datagrams (UDP), and uses Port Numbers (0–65535) to direct traffic to the right app.",
+      "exam_facts": "Well-Known Ports: 0–1023 | Registered Ports: 1024–49151 | Dynamic/Ephemeral Ports: 49152–65535. TCP is connection-oriented (3-Way Handshake, sequence numbers, ACKs, flow control). UDP is connectionless, low-overhead, and best-effort.",
+      "troubleshoot": "Firewalls block traffic primarily at Layer 3 (IP) and Layer 4 (TCP/UDP Port). If an app times out, check whether the host firewall is dropping its specific TCP/UDP port."
+    },
+    "3": {
+      "label": "Network Layer (IPv4, IPv6, CIDR & Private Ranges)",
+      "what": "Handles logical addressing and routes Packets across separate subnets/networks using routers.",
+      "exam_facts": "IPv4 Private (RFC 1918): 10.0.0.0/8, 172.16.0.0/12 (172.16–172.31), 192.168.0.0/16. Loopback: 127.0.0.1 (IPv6 ::1). APIPA: 169.254.0.0/16. IPv6: 128-bit hex; Link-Local starts with fe80::/10, Global Unicast starts with 2000::/3 (No broadcasts in IPv6—uses Multicast & Anycast!).",
+      "troubleshoot": "Quick CIDR Subnet Math: /24 = 256 IPs (254 usable) | /25 = 128 (126 usable) | /26 = 64 (62 usable) | /27 = 32 (30 usable) | /28 = 16 (14 usable) | /30 = 4 (2 usable, point-to-point links)."
+    },
+    "4": {
+      "label": "Data Link Layer (MAC, ARP, Switches & VLANs)",
+      "what": "Delivers Frames locally on the same broadcast domain using 48-bit hexadecimal MAC addresses (first 24 bits = OUI manufacturer ID).",
+      "exam_facts": "ARP resolves known IPv4 addresses to unknown MAC addresses via Layer 2 Broadcast (FF:FF:FF:FF:FF:FF). IPv6 replaces ARP with NDP (Neighbor Discovery Protocol). 802.1Q adds a 4-byte VLAN tag to Ethernet frames.",
+      "troubleshoot": "Switch port flashing amber or blocked? Spanning Tree Protocol (STP / 802.1D / 802.1w RSTP) may have shut down the port to prevent a Layer 2 switching loop!"
+    },
+    "5": {
+      "label": "Physical Layer (Cabling, Fiber Optics & Transceivers)",
+      "what": "Converts Frames into electrical voltages, light pulses, or RF radio waves (Bits).",
+      "exam_facts": "Copper Twisted Pair: Cat5e (1Gbps/100m), Cat6 (10Gbps up to 55m), Cat6a (10Gbps/100m). Wiring: T568A vs T568B (both ends same = Straight-Through; different ends = Crossover). Fiber: Single-Mode (SMF - yellow jacket, laser, miles/km) vs Multimode (MMF - orange/aqua, LED/VCSEL, short campus runs).",
+      "troubleshoot": "Fiber link won't come up? Try swapping the Tx and Rx strands on one end of the duplex patch cable—transmit on one side must plug into receive on the other!"
+    }
+  }
+}

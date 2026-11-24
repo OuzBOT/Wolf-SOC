@@ -1,0 +1,44 @@
+{
+  "title": "Electronics Fundamentals Module 5: Digital Logic Gates, Binary & Flip-Flops",
+  "overview": "Covers TTL/CMOS voltage levels, AND/OR/NOT/NAND/XOR truth tables, Boolean logic, and sequential Flip-Flops.",
+  "art": [
+    "  BASIC LOGIC GATES (?1)(?2)                   UNIVERSAL & XOR GATES (?3)",
+    "   A ──┬───\\                                   A ──┬───\\        (Bubble = NOT!)",
+    "       │AND )── Y (1 only if A=1 AND B=1)          │NAND)o─ Y   (0 only if both 1)",
+    "   B ──┴───/                                   B ──┴───/",
+    "",
+    "   A ──╮\\                                      A ──╮\\           (Parity / Difference",
+    "       │OR )─── Y (1 if A=1 OR B=1)                │XOR )── Y    1 if inputs differ!)",
+    "   B ──╯/                                      B ──╯/",
+    "",
+    "  D FLIP-FLOP (1-BIT MEMORY) (?4)              TTL LOGIC LEVELS (5V)",
+    "   Data (D) ───►│ D     Q │───► Stored Bit      HIGH (1): 2.0V to 5.0V",
+    "   Clock    ───►│>CLK  ~Q │───► Inverted Bit    LOW  (0): 0.0V to 0.8V"
+  ],
+  "nodes": {
+    "1": {
+      "label": "AND Gate & Digital Voltage Levels (HIGH / LOW)",
+      "what": "Outputs a HIGH (1) ONLY when all inputs are HIGH (1). In hardware, 1s and 0s are just voltage thresholds.",
+      "exam_facts": "5V TTL Logic: 0V–0.8V = Logic 0 (LOW), 2.0V–5.0V = Logic 1 (HIGH), 0.8V–2.0V = Undefined/Invalid zone. Networking link: Subnet masking uses bitwise AND to find the Network ID!",
+      "troubleshoot": "Never leave unused inputs on CMOS logic chips (like 74HC00) floating! Tie unused inputs to +5V or GND so static noise doesn't cause random switching and overheating."
+    },
+    "2": {
+      "label": "OR Gate & NOT Gate (Inverter)",
+      "what": "OR outputs HIGH (1) if ANY input is HIGH (1). NOT (triangle with a bubble) flips 1 to 0 and 0 to 1.",
+      "exam_facts": "Boolean Algebra: AND = multiplication (A · B), OR = addition (A + B), NOT = overbar (Ā). De Morgan's Theorems: ~(A · B) = Ā + B̄ and ~(A + B) = Ā · B̄.",
+      "troubleshoot": "Use a Logic Probe or oscilloscope when debugging fast pulses—a standard multimeter averages rapid 1s and 0s into a confusing ~2.5V reading."
+    },
+    "3": {
+      "label": "NAND, NOR & XOR (Exclusive-OR) Gates",
+      "what": "NAND and NOR are 'Universal Gates' (you can build any other gate out of them). XOR outputs 1 ONLY when the two inputs are DIFFERENT.",
+      "exam_facts": "XOR Truth Table: 0⊕0=0, 0⊕1=1, 1⊕0=1, 1⊕1=0. Used in binary adders, parity error-checking, and cryptography/encryption.",
+      "troubleshoot": "On 14-pin 7400-series DIP chips (like 74LS00 Quad NAND), Pin 7 is almost always GND and Pin 14 is +5V (VCC)—always check the datasheet pinout before powering up!"
+    },
+    "4": {
+      "label": "Flip-Flops & Sequential Logic (Memory)",
+      "what": "Unlike basic gates whose outputs change immediately, a Flip-Flop stores 1 bit of memory and only updates on the rising/falling edge of a Clock (CLK) pulse.",
+      "exam_facts": "Types: SR (Set-Reset), D (Data/Delay - used in CPU registers & RAM), JK (universal flip-flop), and T (Toggle - divides clock frequency by 2 for binary counters).",
+      "troubleshoot": "Mechanical pushbuttons 'bounce' (make/break contact dozens of times in milliseconds), causing a counter flip-flop to jump by 5 or 10 counts per press unless debounced."
+    }
+  }
+}

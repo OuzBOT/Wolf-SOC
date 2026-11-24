@@ -1,0 +1,40 @@
+{
+  "title": "Networking Domain 2: Routing, Switching, VLANs & Wireless (20%)",
+  "overview": "Covers VLAN tagging/trunking, Spanning Tree (STP), link aggregation (LACP), routing protocols, and Wi-Fi standards.",
+  "art": [
+    "  SWITCHING, VLANS & TRUNKING (?1)(?2)          ROUTING & WIRELESS (?3)(?4)",
+    "   [PC: VLAN 10]──┐                              ┌──► OSPF (Internal / Link-State)",
+    "                  ├──[ Switch ]══802.1Q Trunk══►[ Router ]──► BGP (Internet / Path-Vector)",
+    "   [PC: VLAN 20]──┘   (STP/LACP)                 └──► NAT / PAT (Private -> Public IP)",
+    "",
+    "  WI-FI NON-OVERLAPPING CHANNELS (2.4 GHz)      WIFI STANDARDS",
+    "   Ch 1 (2412)      Ch 6 (2437)      Ch 11 (2462)   802.11ac (Wi-Fi 5): 5 GHz only",
+    "    ╭───╮            ╭───╮            ╭───╮         802.11ax (Wi-Fi 6/6E): 2.4/5/6 GHz"
+  ],
+  "nodes": {
+    "1": {
+      "label": "VLANs, Access Ports vs. 802.1Q Trunk Ports",
+      "what": "VLANs (Virtual LANs) logically split one physical switch into multiple isolated broadcast domains for security and performance.",
+      "exam_facts": "Access Port: Carries traffic for ONE single VLAN (connects to PCs/printers). Trunk Port (IEEE 802.1Q): Carries multiple VLANs simultaneously between switches/routers by inserting a 4-byte VLAN tag. Native VLAN carries untagged traffic (default VLAN 1—change it for security!).",
+      "troubleshoot": "Inter-VLAN Routing: Devices in VLAN 10 cannot talk to VLAN 20 without a Layer 3 Switch (SVI) or a Router ('Router-on-a-Stick' using sub-interfaces). Always check for Native VLAN mismatches on trunk ports!"
+    },
+    "2": {
+      "label": "Switch Redundancy: STP (802.1D/w) & LACP (802.3ad)",
+      "what": "Redundant cables between switches prevent single points of failure, but require protocols to prevent broadcast storms or bundle bandwidth.",
+      "exam_facts": "Spanning Tree Protocol (STP / RSTP 802.1w): Elects a Root Bridge (lowest Bridge ID = Priority + MAC) and puts redundant ports into a Blocking/Discarding state to prevent Layer 2 loops. LACP (802.3ad / EtherChannel): Bonds multiple physical cables into one high-speed logical link.",
+      "troubleshoot": "If a switch CPU spikes to 100% and all port LEDs blink rapidly in unison, you likely have a Layer 2 switching loop because STP was disabled or misconfigured."
+    },
+    "3": {
+      "label": "Routing Protocols, Administrative Distance & NAT/PAT",
+      "what": "Routers forward packets between different IP networks using static routes or dynamic routing protocols.",
+      "exam_facts": "IGP (Interior): OSPF (Link-State, uses Dijkstra's algorithm, fast convergence, metric = Cost/bandwidth) vs RIP (Distance-Vector, metric = Hop count, max 15 hops). EGP (Exterior): BGP (Path-Vector, runs the global Internet, uses ASNs). FHRP: VRRP/HSRP provide a Virtual IP for default-gateway redundancy.",
+      "troubleshoot": "NAT vs PAT: Static NAT maps 1 private IP to 1 public IP. PAT (NAT Overload) maps thousands of private IPs to ONE public IP by tracking unique source port numbers."
+    },
+    "4": {
+      "label": "Wireless Standards (802.11), Frequencies & Security",
+      "what": "Connects wireless clients via Access Points (WAPs) across 2.4 GHz (longer range, penetrates walls, slower, crowded) and 5 GHz / 6 GHz (faster, shorter range, more channels).",
+      "exam_facts": "2.4 GHz has ONLY 3 non-overlapping 20MHz channels: 1, 6, and 11. Standards: 802.11n (Wi-Fi 4 - 2.4/5GHz), 802.11ac (Wi-Fi 5 - 5GHz only, MU-MIMO), 802.11ax (Wi-Fi 6/6E - OFDMA, 2.4/5/6GHz). Security: WPA2-Enterprise (802.1X/RADIUS + AES-CCMP) or WPA3 (SAE - prevents offline dictionary attacks).",
+      "troubleshoot": "Co-channel interference happens when nearby APs use the same channel; Adjacent-channel interference happens when APs use overlapping channels like 2, 3, or 4—stick strictly to 1, 6, and 11 on 2.4 GHz!"
+    }
+  }
+}
